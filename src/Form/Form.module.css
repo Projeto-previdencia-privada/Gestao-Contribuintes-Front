@@ -1,0 +1,82 @@
+.form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 5em;
+  text-align: center;
+  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  bottom: 0;
+  width: 100%;
+  background-color: #fbfbfb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.h1 {
+  text-align: center;
+  color: #0c326f;
+}
+
+.form_login{
+  max-width: 600px;
+  margin: 230px auto;
+  padding: 5em;
+  text-align: center;
+  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  bottom: 0;
+  width: 100%;
+  background-color: #fbfbfb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #0c326f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button_dep {
+  width: 60%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #0c326f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.recall_forget {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.singup-link {
+  text-align: center;
+}
+
+.input{
+  align-items: center;
+  justify-content: center;
+}
