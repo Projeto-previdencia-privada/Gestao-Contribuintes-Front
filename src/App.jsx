@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./Components/Footer/Footer.jsx";
 import Header from "./Components/Header/Header.jsx";
+import HomeHeader from "./Components/Header/HomeHeader.jsx"
 import { AuthProvider } from "./Contexts/Auth.jsx";
 import useAuth from "./Hooks/useAuth.jsx";
 import ArvoreGenealogica from "./Pages/ArvoreGenealogica";
@@ -17,56 +18,39 @@ import Home from "./Pages/Home";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
-
   return signed ? <Item /> : <CadastroContribuintes />;
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "cadastroLogin",
-    element: <CadastroLogin />,
-  },
-  {
-    path: "cadastroContribuintes",
-    element: <Private Item={CadastroContribuintes} />,
-    exact: true,
-  },
-  {
-    path: "cadastro",
-    element: <Cadastro />,
-  },
-  {
-    path: "atualizaCadastro",
-    element: <AtualizaCadastro />,
-  },
-  {
-    path: "infoContribuicao",
-    element: <InfoPrev />,
-  },
-  {
-    path: "cadastroDependentes",
-    element: <CadastroDependentes />,
-  },
-  {
-    path: "arvoreGenealogica",
-    element: <ArvoreGenealogica />,
-  },
-]);
+const AppContent = () => {
+  const location = useLocation();
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+  return (
+    <>
+      {location.pathname === '/home' ? <HomeHeader /> : <Header />}
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastroLogin" element={<CadastroLogin />} />
+        <Route path="/cadastroContribuintes" element={<Private Item={CadastroContribuintes} />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/atualizaCadastro" element={<AtualizaCadastro />} />
+        <Route path="/infoContribuicao" element={<InfoPrev />} />
+        <Route path="/cadastroDependentes" element={<CadastroDependentes />} />
+        <Route path="/arvoreGenealogica" element={<ArvoreGenealogica />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+};
+
+const App = () => (
   <React.StrictMode>
     <AuthProvider>
-      <Header />
-      <RouterProvider router={router} />
-      <Footer />
+      <Router>
+        <AppContent />
+      </Router>
     </AuthProvider>
   </React.StrictMode>
 );
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);

@@ -29,13 +29,13 @@ function Footer() {
               </a>
               <a
                 className="br-item"
-                href="http://localhost:5173/cadastroContribuintes"
+                href="http://localhost:5173/login"
               >
                 <div className="content">Cadastro de Contribuintes</div>
               </a>
               <a
                 className="br-item"
-                href="http://localhost:5173/cadastroDependentes"
+                href="http://localhost:5173/login"
               >
                 <div className="content">Cadastro de Dependentes</div>
               </a>
