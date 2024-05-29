@@ -112,6 +112,7 @@ function AtualizaCadastro() {
       console.error("Erro ao atualizar dados:", error);
     }
   };
+  
 
   return (
     <div className={styles.container}>
