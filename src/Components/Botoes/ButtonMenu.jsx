@@ -96,7 +96,7 @@ const MenuButton = ({ isOpenProp }) => {
                       <span className="icon">
                         <i className="fas fa-heart" aria-hidden="true"></i>
                       </span>
-                      <span className="content">Meus Dados</span>
+                      <span className="content">Dados Contribuinte</span>
                     </a>
                   </li>
                   <li>

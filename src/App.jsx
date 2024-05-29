@@ -15,6 +15,7 @@ import CadastroLogin from "./Pages/CadastroLogin.jsx";
 import InfoPrev from "./Pages/InfoPrev.jsx";
 import Login from "./Pages/Login.jsx";
 import Home from "./Pages/Home";
+import EsqueceSenha from "./Pages/EsqueceSenha.jsx";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -31,6 +32,7 @@ const AppContent = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastroLogin" element={<CadastroLogin />} />
+        <Route path="/esqueceuSenha" element={<EsqueceSenha />} />
         <Route path="/cadastroContribuintes" element={<Private Item={CadastroContribuintes} />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/atualizaCadastro" element={<AtualizaCadastro />} />

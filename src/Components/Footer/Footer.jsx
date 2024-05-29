@@ -41,7 +41,7 @@ function Footer() {
               </a>
               <a
                 className="br-item"
-                href="http://localhost:5173/arvoregenealogica"
+                href="http://localhost:5173/login"
               >
                 <div className="content">Árvore Genealógica</div>
               </a>

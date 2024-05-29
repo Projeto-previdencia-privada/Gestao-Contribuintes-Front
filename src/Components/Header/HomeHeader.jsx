@@ -3,6 +3,7 @@ import govbr from "../../Img/govbr.svg";
 import MenuButton from "../Botoes/ButtonMenu";
 import styles from "./Header.module.css";
 import ButtonAcess from "../Botoes/ButtonAcess";
+import MenuButtonHeader from "../Botoes/ButtonMenuHeader";
 
 function HomeHeader() {
   return (
@@ -65,7 +66,7 @@ function HomeHeader() {
         <div className={styles.header_bottom}>
           <div className={styles.header_menu}>
             <div className={styles.header_menu_trigger}>
-              <MenuButton />
+              <MenuButtonHeader />
             </div>
             <div className={styles.header_info}>
               <div className={styles.header_title}>Sistema de Regimes Próprios de Previdência</div>
