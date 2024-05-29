@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 
 const Login = () => {
-  
   const { signin } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -87,16 +86,6 @@ const Login = () => {
             <div className="content" aria-label={errorMessage} role="alert">
               <span className="message-title">Erro.</span>
               <span className="message-body">{errorMessage}</span>
-            </div>
-            <div className="close">
-              <button
-                className="br-button circle small"
-                type="button"
-                aria-label="Fechar a mensagem de alerta"
-                onClick={() => setErrorMessage("")}
-              >
-                <i className="fas fa-times" aria-hidden="true"></i>
-              </button>
             </div>
           </div>
         )}

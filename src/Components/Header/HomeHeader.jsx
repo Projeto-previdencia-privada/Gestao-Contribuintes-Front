@@ -11,9 +11,15 @@ function HomeHeader() {
       <div className="container-lg">
         <div className="header-top">
           <div className="header-logo">
-            <a href="http://localhost:5173/home" className="header-logo">
+            <div
+              style={{ cursor: "pointer" }}
+              className="header-logo"
+              onClick={() =>
+                (window.location.href = "http://localhost:5173/home")
+              }
+            >
               <img src={govbr} alt="Logo do GovBR" />
-            </a>
+            </div>
           </div>
           <div className="header-actions">
             <div className="header-links dropdown">
@@ -69,7 +75,9 @@ function HomeHeader() {
               <MenuButtonHeader />
             </div>
             <div className={styles.header_info}>
-              <div className={styles.header_title}>Sistema de Regimes Próprios de Previdência</div>
+              <div className={styles.header_title}>
+                Sistema de Regimes Próprios de Previdência
+              </div>
             </div>
           </div>
         </div>

@@ -157,6 +157,7 @@ const EsqueceSenha = () => {
               <span className="message-title">Sucesso!</span>
               <span className="message-body">{successMessage}</span>
             </div>
+            
           </div>
         )}
       </form>
