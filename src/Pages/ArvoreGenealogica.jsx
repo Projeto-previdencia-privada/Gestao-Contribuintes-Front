@@ -5,23 +5,51 @@ import { Tree, TreeNode } from "react-organizational-chart";
 function ArvoreGenealogica() {
   const [cpf, setCpf] = useState("");
   const [familiares, setFamiliares] = useState(null);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState("");
 
   const handleSearch = async () => {
     try {
-      setLoading(true); 
+      setLoading(true);
+      setMensagemErro(""); // Limpar mensagem de erro anterior
       const response = await fetch(
         `http://localhost:8080/contribuintes/familia/${cpf}`
       );
       if (!response.ok) {
-        throw new Error("Erro ao buscar dados da API");
+        if (response.status === 400) {
+          throw new Error("400");
+        } else if (response.status === 404) {
+          throw new Error("404");
+        } else {
+          throw new Error("Erro ao buscar dados da API");
+        }
       }
       const data = await response.json();
       setFamiliares(data.familia);
       setLoading(false);
     } catch (error) {
-      console.error(error.message);
       setLoading(false);
+      if (error.message === "400") {
+        setMensagemErro(
+          `<div class="br-message danger">
+            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
+            <div class="content" aria-label="CPF inválido." role="alert">
+              <span class="message-title">O cpf não é válido.</span>
+            </div>
+          </div>`
+        );
+      } else if (error.message === "404") {
+        setMensagemErro(
+          `<div class="br-message danger">
+            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
+            <div class="content" aria-label="CPF não encontrado." role="alert">
+              <span class="message-title">O contribuinte não está cadastrado.</span>
+            </div>
+          </div>`
+        );
+      } else {
+        setMensagemErro("Erro ao buscar dados da API");
+      }
     }
   };
 
@@ -76,6 +104,11 @@ function ArvoreGenealogica() {
             </button>
           </div>
         </div>
+        
+        {mensagemErro && (
+          <div dangerouslySetInnerHTML={{ __html: mensagemErro }} />
+        )}
+
         {familiares && (
           <div className="br-list" role="list">
             <div className="header">

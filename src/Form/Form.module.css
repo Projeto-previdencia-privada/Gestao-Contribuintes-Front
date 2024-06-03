@@ -80,3 +80,8 @@ button {
   align-items: center;
   justify-content: center;
 }
+
+input.error {
+  width: calc(100% - 20px);
+}
+

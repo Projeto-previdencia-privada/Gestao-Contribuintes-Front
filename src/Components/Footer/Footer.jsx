@@ -24,7 +24,7 @@ function Footer() {
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
-              <a className="br-item" href="http://localhost:5173/home">
+              <a className="br-item" href="http://localhost:5173">
                 <div className="content">Home</div>
               </a>
               <a

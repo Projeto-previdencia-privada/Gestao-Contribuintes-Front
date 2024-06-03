@@ -20,11 +20,69 @@ function Form() {
   const [cpfMae2, setCpfMae2] = useState("");
   const [cpfPai3, setCpfPai3] = useState("");
   const [cpfMae3, setCpfMae3] = useState("");
+  const [cpfError, setCpfError] = useState("");
+  const [cpfPaiError, setCpfPaiError] = useState("");
+  const [cpfPai2Error, setCpfPai2Error] = useState("");
+  const [cpfPai3Error, setCpfPai3Error] = useState("");
+  const [cpfMaeError, setCpfMaeError] = useState("");
+  const [cpfMae2Error, setCpfMae2Error] = useState("");
+  const [cpfMae3Error, setCpfMae3Error] = useState("");
+  const [cpfConjugeError, setCpfConjugeError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    
+    if (cpf.trim() === "" || !/^\d{11}$/.test(cpf)) {
+      setCpfError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfError("");
+    }
+    if (cpfPai.trim() === "" || !/^\d{11}$/.test(cpfPai)) {
+      setCpfPaiError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfPaiError("");
+    }
+    if (cpfPai2.trim() === "" || !/^\d{11}$/.test(cpfPai2)) {
+      setCpfPai2Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfPai2Error("");
+    }
+    if (cpfPai3.trim() === "" || !/^\d{11}$/.test(cpfPai3)) {
+      setCpfPai3Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfPai3Error("");
+    }
+    if (cpfMae.trim() === "" || !/^\d{11}$/.test(cpfMae)) {
+      setCpfMaeError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfMaeError("");
+    }
+    if (cpfMae2.trim() === "" || !/^\d{11}$/.test(cpfMae2)) {
+      setCpfMae2Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfMae2Error("");
+    }
+    if (cpfMae3.trim() === "" || !/^\d{11}$/.test(cpfMae3)) {
+      setCpfMae3Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfMae3Error("");
+    }
+    if (cpfConjuge.trim() === "" || !/^\d{11}$/.test(cpfConjuge)) {
+      setCpfConjugeError(
+        "CPF inválido. Deve conter apenas números e 11 dígitos."
+      );
+      return;
+    } else {
+      setCpfConjugeError("");
+    }
+
     const formattedInicioContribuicao = format(
       new Date(inicioContribuicao),
       "dd/MM/yyyy"
@@ -39,7 +97,7 @@ function Form() {
       salario: parseFloat(salario).toFixed(2),
       categoria,
       telefone,
-      inicioContribuicao: formattedInicioContribuicao, 
+      inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
       cpfPai,
       cpfMae,
@@ -92,46 +150,65 @@ function Form() {
       <h1 className={styles.h1}>Cadastro de Contribuinte</h1>
       <form onSubmit={handleSubmit}>
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Cpf:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              CPF:
+            </label>
+          </div>
           <div className="br-input input-inline">
-
             <input
               type="text"
               id="cpf"
               value={cpf}
-              placeholder="Digite seu cpf"
-              onChange={(e) => setCpf(e.target.value)}
+              placeholder="Digite o cpf"
+              onChange={(e) => {
+                setCpf(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfError("");
+                }
+              }}
+            />
+            {cpfError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfError}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Nome Civil:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="text"
+              id="nomeCivil"
+              value={nomeCivil}
+              placeholder="Digite o nome completo"
+              onChange={(e) => setNomeCivil(e.target.value)}
             ></input>
           </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Nome Civil:
-              </label>
-            </div>
-            <div className="br-input input-inline">
-            <input
-              type="text"
-              id="nomeCivil"
-              value={nomeCivil}
-              placeholder="Digite seu nome completo"
-              onChange={(e) => setNomeCivil(e.target.value)}
-            ></input>
-            </div>
-        </div>
-
-        <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Nome Social (opcional):
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Nome Social (opcional):
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
@@ -144,45 +221,45 @@ function Form() {
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Endereço:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Endereço:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
               id="endereco"
               value={endereco}
-              placeholder="Digite seu endereço completo"
+              placeholder="Digite o endereço completo"
               onChange={(e) => setEndereco(e.target.value)}
             ></input>
           </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Email:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Email:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="email"
               id="email"
               value={email}
-              placeholder="Digite seu endereço de email"
+              placeholder="Digite o email"
               onChange={(e) => setEmail(e.target.value)}
             ></input>
           </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Salario:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Salario:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="number"
@@ -193,29 +270,29 @@ function Form() {
             ></input>
           </div>
         </div>
-        
+
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Categoria:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Categoria:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
               id="categoria"
               value={categoria}
-              placeholder="Digite a sua categoria"
+              placeholder="Digite a categoria"
               onChange={(e) => setCategoria(e.target.value)}
             ></input>
           </div>
         </div>
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Telefone:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Telefone:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
@@ -228,11 +305,11 @@ function Form() {
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Inicio da Contribuição:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Inicio da Contribuição:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="date"
@@ -244,53 +321,113 @@ function Form() {
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Cpf Conjuge:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Cpf Conjuge:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
               id="cpfConjuge"
               value={cpfConjuge}
               placeholder="Digite o cpf do conjuge"
-              onChange={(e) => setCpfConjuge(e.target.value)}
-            ></input>
+              onChange={(e) => {
+                setCpfConjuge(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfConjugeError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfConjugeError("");
+                }
+              }}
+            />
+            {cpfConjugeError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfConjugeError}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Cpf Pai:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Cpf Pai:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
               id="cpfPai"
               value={cpfPai}
               placeholder="Digite o cpf do pai"
-              onChange={(e) => setCpfPai(e.target.value)}
-            ></input>
+              onChange={(e) => {
+                setCpfPai(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfPaiError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfPaiError("");
+                }
+              }}
+            />
+            {cpfPaiError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfPaiError}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-            <div className="input-label">
-              <label className="text-nowrap" htmlFor="lateral">
-                Cpf Mae:
-              </label>
-            </div>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Cpf Mae:
+            </label>
+          </div>
           <div className="br-input input-inline">
             <input
               type="text"
               id="cpfMae"
               value={cpfMae}
               placeholder="Digite o cpf da mae"
-              onChange={(e) => setCpfMae(e.target.value)}
-            ></input>
+              onChange={(e) => {
+                setCpfMae(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfMaeError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfMaeError("");
+                }
+              }}
+            />
+            {cpfMaeError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfMaeError}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -309,68 +446,150 @@ function Form() {
         {multiParentalidade && (
           <div>
             <div className="col-sm-20 col-lg-30 mb-2">
-                <div className="input-label">
-                  <label className="text-nowrap" htmlFor="lateral">
-                    Cpf Pai2:
-                  </label>
-                </div>
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Pai 2:
+                </label>
+              </div>
               <div className="br-input input-inline">
                 <input
                   type="text"
                   id="cpfPai2"
                   value={cpfPai2}
-                  placeholder="Digite o cpf do pai2"
-                  onChange={(e) => setCpfPai2(e.target.value)}
-                ></input>
+                  placeholder="Digite o cpf do pai"
+                  onChange={(e) => {
+                    setCpfPai2(e.target.value);
+                    if (
+                      e.target.value.trim() === "" ||
+                      !/^\d{11}$/.test(e.target.value)
+                    ) {
+                      setCpfPai2Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfPai2Error("");
+                    }
+                  }}
+                />
+                {cpfPai2Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfPai2Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="col-sm-20 col-lg-30 mb-2">
-                <div className="input-label">
-                  <label className="text-nowrap" htmlFor="lateral">
-                    Cpf Mae2:
-                  </label>
-                </div>
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Mae2:
+                </label>
+              </div>
               <div className="br-input input-inline">
                 <input
                   type="text"
                   id="cpfMae2"
                   value={cpfMae2}
                   placeholder="Digite o cpf da mae2"
-                  onChange={(e) => setCpfMae2(e.target.value)}
-                ></input>
+                  onChange={(e) => {
+                    setCpfMae2(e.target.value);
+                    if (
+                      e.target.value.trim() === "" ||
+                      !/^\d{11}$/.test(e.target.value)
+                    ) {
+                      setCpfMae2Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfMae2Error("");
+                    }
+                  }}
+                />
+                {cpfMae2Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfMae2Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
+
             <div className="col-sm-20 col-lg-30 mb-2">
-                <div className="input-label">
-                  <label className="text-nowrap" htmlFor="lateral">
-                    Cpf Pai3:
-                  </label>
-                </div>
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Pai3:
+                </label>
+              </div>
               <div className="br-input input-inline">
                 <input
                   type="text"
                   id="cpfPai3"
                   value={cpfPai3}
                   placeholder="Digite o cpf do pai3"
-                  onChange={(e) => setCpfPai3(e.target.value)}
-                ></input>
+                  onChange={(e) => {
+                    setCpfPai3(e.target.value);
+                    if (
+                      e.target.value.trim() === "" ||
+                      !/^\d{11}$/.test(e.target.value)
+                    ) {
+                      setCpfPai3Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfPai3Error("");
+                    }
+                  }}
+                />
+                {cpfPai3Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfPai3Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
+
             <div className="col-sm-20 col-lg-30 mb-2">
-                <div className="input-label">
-                  <label className="text-nowrap" htmlFor="lateral">
-                    Cpf Mae3:
-                  </label>
-                </div>
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Mae3:
+                </label>
+              </div>
               <div className="br-input input-inline">
                 <input
                   type="text"
                   id="cpfMae3"
                   value={cpfMae3}
                   placeholder="Digite o cpf da mae3"
-                  onChange={(e) => setCpfMae3(e.target.value)}
-                ></input>
+                  onChange={(e) => {
+                    setCpfMae3(e.target.value);
+                    if (
+                      e.target.value.trim() === "" ||
+                      !/^\d{11}$/.test(e.target.value)
+                    ) {
+                      setCpfMae3Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfMae3Error("");
+                    }
+                  }}
+                />
+                {cpfMae3Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfMae3Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -383,5 +602,3 @@ function Form() {
 }
 
 export default Form;
-
-

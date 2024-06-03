@@ -28,9 +28,9 @@ const AppContent = () => {
 
   return (
     <>
-      {location.pathname === '/home' ? <HomeHeader /> : <Header />}
+      {location.pathname === '/' ? <HomeHeader /> : <Header />}
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastroLogin" element={<CadastroLogin />} />
         <Route path="/esqueceuSenha" element={<EsqueceSenha />} />

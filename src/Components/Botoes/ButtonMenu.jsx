@@ -56,7 +56,7 @@ const MenuButton = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="http://localhost:5173/home"
+                  href="http://localhost:5173"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>

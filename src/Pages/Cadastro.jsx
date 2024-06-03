@@ -5,19 +5,45 @@ import { Link } from "react-router-dom";
 function Cadastro() {
   const [cpf, setCpf] = useState("");
   const [contribuinte, setContribuinte] = useState(null);
+  const [mensagemErro, setMensagemErro] = useState("");
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/contribuintes/cadastroAtualizacao/${cpf}`
-      );
+      setMensagemErro("");
+      const response = await fetch(`/contribuintes/${cpf}`);
       if (!response.ok) {
-        throw new Error("Erro ao buscar dados da API: " + response.statusText);
+        if (response.status === 400) {
+          throw new Error("400");
+        } else if (response.status === 404) {
+          throw new Error("404");
+        } else {
+          throw new Error("Erro na resposta da API");
+        }
       }
       const data = await response.json();
       setContribuinte(data.info);
     } catch (error) {
-      console.error("Erro ao buscar dados da API", error);
+      if (error.message === "400") {
+        setMensagemErro(
+          `<div class="br-message danger">
+            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
+            <div class="content" aria-label="CPF inválido." role="alert">
+              <span class="message-title">O cpf não é válido.</span>
+            </div>
+          </div>`
+        );
+      } else if (error.message === "404") {
+        setMensagemErro(
+          `<div class="br-message danger">
+            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
+            <div class="content" aria-label="CPF não encontrado." role="alert">
+              <span class="message-title">O contribuinte não está cadastrado.</span>
+            </div>
+          </div>`
+        );
+      } else {
+        setMensagemErro("Erro ao buscar dados da API");
+      }
     }
   };
 
@@ -45,6 +71,11 @@ function Cadastro() {
             </button>
           </div>
         </div>
+
+        {mensagemErro && (
+          <div dangerouslySetInnerHTML={{ __html: mensagemErro }} />
+        )}
+
         {contribuinte && (
           <>
             <div className="br-list" role="list">

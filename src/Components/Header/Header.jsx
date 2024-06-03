@@ -13,7 +13,7 @@ function Header() {
             <div 
               style={{ cursor: 'pointer' }}
               className="header-logo" 
-              onClick={() => window.location.href="http://localhost:5173/home"}>
+              onClick={() => window.location.href="http://localhost:5173"}>
               <img src={govbr} alt="Logo do GovBR" />
             </div>
           </div>

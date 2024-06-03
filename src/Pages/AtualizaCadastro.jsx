@@ -22,6 +22,9 @@ function AtualizaCadastro() {
   const [cpfMae2Atualizado, setCpfMae2Atualizado] = useState("");
   const [cpfPai3Atualizado, setCpfPai3Atualizado] = useState("");
   const [cpfMae3Atualizado, setCpfMae3Atualizado] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [notFoundMessage, setNotFoundMessage] = useState("");
 
   const location = useLocation();
 
@@ -39,6 +42,14 @@ function AtualizaCadastro() {
       const response = await fetch(
         `http://localhost:8080/contribuintes/cadastroAtualizacao/${cpf}`
       );
+      if (response.status === 404) {
+        setNotFoundMessage("O contribuinte não está cadastrado.");
+        return;
+      }
+      if (response.status === 400) {
+        setErrorMessage("O cpf não é válido.");
+        return;
+      }
       if (!response.ok) {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
@@ -94,6 +105,58 @@ function AtualizaCadastro() {
       if (cpfPai3Atualizado !== "") updatedData.cpfPai3 = cpfPai3Atualizado;
       if (cpfMae3Atualizado !== "") updatedData.cpfMae3 = cpfMae3Atualizado;
 
+      if (cpfConjugeAtualizado !== "") {
+        if (!/^\d{11}$/.test(cpfConjugeAtualizado)) {
+            setErrorMessage("Campo CPF do cônjuge está inválido! Deve conter apenas números e 11 dígitos.");
+            return;
+        }
+        updatedData.cpfConjuge = cpfConjugeAtualizado;
+    }
+
+    if (cpfPaiAtualizado !== "") {
+      if (!/^\d{11}$/.test(cpfPaiAtualizado)) {
+          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
+          return;
+      }
+      updatedData.cpfPai = cpfPaiAtualizado;
+  }
+    if (cpfPai2Atualizado !== "") {
+      if (!/^\d{11}$/.test(cpfPai2Atualizado)) {
+          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
+          return;
+      }
+      updatedData.cpfPai2 = cpfPai2Atualizado;
+  }
+    if (cpfPai3Atualizado !== "") {
+      if (!/^\d{11}$/.test(cpfPai3Atualizado)) {
+          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
+          return;
+      }
+      updatedData.cpfPai3 = cpfPai3Atualizado;
+  }
+
+  if (cpfMaeAtualizado !== "") {
+    if (!/^\d{11}$/.test(cpfMaeAtualizado)) {
+        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
+        return;
+    }
+    updatedData.cpfMae = cpfMaeAtualizado;
+}
+  if (cpfMae2Atualizado !== "") {
+    if (!/^\d{11}$/.test(cpfMae2Atualizado)) {
+        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
+        return;
+    }
+    updatedData.cpfMae2 = cpfMae2Atualizado;
+}
+  if (cpfMae3Atualizado !== "") {
+    if (!/^\d{11}$/.test(cpfMae3Atualizado)) {
+        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
+        return;
+    }
+    updatedData.cpfMae3 = cpfMae3Atualizado;
+}
+
       const response = await fetch(
         `http://localhost:8080/contribuintes/${cpf}`,
         {
@@ -104,36 +167,123 @@ function AtualizaCadastro() {
           body: JSON.stringify(updatedData),
         }
       );
+      if (response.status === 400) {
+        setErrorMessage(
+          "O campo está com o formato inválido! Por favor, revise a informação."
+        );
+        return;
+      }
       if (!response.ok) {
         throw new Error("Erro ao atualizar dados: " + response.statusText);
       }
-      console.log("Dados atualizados com sucesso");
+      setSuccessMessage("Os dados foram alterados com sucesso.");
       handleSearch(cpf);
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);
     }
   };
 
+  const handleCloseMessage = () => {
+    setSuccessMessage("");
+    setErrorMessage("");
+    setNotFoundMessage("");
+  };
+
   return (
     <div className={styles.container}>
+      {successMessage && (
+        <div className="br-message success">
+          <div className="icon">
+            <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Sucesso. Os dados foram atualizados!."
+            role="alert"
+          >
+            <span className="message-title">Sucesso.</span>
+            <span className="message-body">{successMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="br-message danger">
+          <div className="icon">
+            <i className="fas fa-times-circle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div className="content" aria-label="CPF inválido " role="alert">
+            <span className="message-title">
+              Campo inválido! Por favor, revise a informação.
+            </span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {notFoundMessage && (
+        <div className="br-message danger">
+          <div className="icon">
+            <i className="fas fa-times-circle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div
+            className="content"
+            aria-label="CPF não encontrado."
+            role="alert"
+          >
+            <span className="message-title">
+              O contribuinte não está cadastrado.
+            </span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.form}>
         <h1 className={styles.h1}>Atualizar Dados</h1>
 
         <div className="col-sm-5 col-lg-5 mb-3">
           <div className="br-input large input-button">
-            <label htmlFor="input-search-large">Buscar</label>
+            <label htmlFor="input-search-large">CPF:</label>
             <input
-              id="input-search-large"
-              type="search"
+              type="text"
+              id="cpf"
               placeholder="Digite o CPF"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
             />
             <button
               className="br-button"
-              type="button"
-              aria-label="Buscar"
               onClick={() => handleSearch(cpf)}
+              aria-label="Buscar"
             >
               <i className="fas fa-search" aria-hidden="true"></i>
             </button>
@@ -142,8 +292,6 @@ function AtualizaCadastro() {
 
         {contribuinte ? (
           <>
-            <div className="br-divider"></div>
-
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
@@ -155,7 +303,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="nomeCivil"
                   value={nomeCivilAtualizado}
-                  placeholder="Digite seu nome completo"
+                  placeholder="Digite seu nome civil"
                   onChange={(e) => setNomeCivilAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -164,7 +312,7 @@ function AtualizaCadastro() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Nome Social (opcional):
+                  Nome Social:
                 </label>
               </div>
               <div className="br-input input-inline">
@@ -172,7 +320,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="nomeSocial"
                   value={nomeSocialAtualizado}
-                  placeholder="Digite o nome que se identifica"
+                  placeholder="Digite seu nome social"
                   onChange={(e) => setNomeSocialAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -189,7 +337,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="endereco"
                   value={enderecoAtualizado}
-                  placeholder="Digite seu endereço completo"
+                  placeholder="Digite seu endereço"
                   onChange={(e) => setEnderecoAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -203,45 +351,11 @@ function AtualizaCadastro() {
               </div>
               <div className="br-input input-inline">
                 <input
-                  type="email"
+                  type="text"
                   id="email"
                   value={emailAtualizado}
-                  placeholder="Digite seu endereço de email"
+                  placeholder="Digite seu email"
                   onChange={(e) => setEmailAtualizado(e.target.value)}
-                ></input>
-              </div>
-            </div>
-
-            <div className="col-sm-20 col-lg-30 mb-2">
-              <div className="input-label">
-                <label className="text-nowrap" htmlFor="lateral">
-                  Salário:
-                </label>
-              </div>
-              <div className="br-input input-inline">
-                <input
-                  type="number"
-                  id="salario"
-                  value={salarioAtualizado}
-                  placeholder="Digite o valor do salário"
-                  onChange={(e) => setSalarioAtualizado(e.target.value)}
-                ></input>
-              </div>
-            </div>
-
-            <div className="col-sm-20 col-lg-30 mb-2">
-              <div className="input-label">
-                <label className="text-nowrap" htmlFor="lateral">
-                  Categoria:
-                </label>
-              </div>
-              <div className="br-input input-inline">
-                <input
-                  type="text"
-                  id="categoria"
-                  value={categoriaAtualizado}
-                  placeholder="Digite a categoria"
-                  onChange={(e) => setCategoriaAtualizado(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -266,7 +380,41 @@ function AtualizaCadastro() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Início da Contribuição:
+                  Salário:
+                </label>
+              </div>
+              <div className="br-input input-inline">
+                <input
+                  type="text"
+                  id="salario"
+                  value={salarioAtualizado}
+                  placeholder="Digite seu salário"
+                  onChange={(e) => setSalarioAtualizado(e.target.value)}
+                ></input>
+              </div>
+            </div>
+
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Categoria:
+                </label>
+              </div>
+              <div className="br-input input-inline">
+                <input
+                  type="text"
+                  id="categoria"
+                  value={categoriaAtualizado}
+                  placeholder="Digite sua categoria"
+                  onChange={(e) => setCategoriaAtualizado(e.target.value)}
+                ></input>
+              </div>
+            </div>
+
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Início de Contribuição:
                 </label>
               </div>
               <div className="br-input input-inline">
@@ -274,7 +422,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="inicioContribuicao"
                   value={inicioContribuicaoAtualizado}
-                  placeholder="dd/mm/aaaa"
+                  placeholder="Digite sua data de início de contribuição"
                   onChange={(e) =>
                     setInicioContribuicaoAtualizado(e.target.value)
                   }
@@ -344,7 +492,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="cpfPai2"
                   value={cpfPai2Atualizado}
-                  placeholder="Digite o CPF do pai"
+                  placeholder="Digite o CPF do pai 2"
                   onChange={(e) => setCpfPai2Atualizado(e.target.value)}
                 ></input>
               </div>
@@ -361,7 +509,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="cpfMae2"
                   value={cpfMae2Atualizado}
-                  placeholder="Digite o CPF da mãe"
+                  placeholder="Digite o CPF da mãe 2"
                   onChange={(e) => setCpfMae2Atualizado(e.target.value)}
                 ></input>
               </div>
@@ -378,7 +526,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="cpfPai3"
                   value={cpfPai3Atualizado}
-                  placeholder="Digite o CPF do pai"
+                  placeholder="Digite o CPF do pai 3"
                   onChange={(e) => setCpfPai3Atualizado(e.target.value)}
                 ></input>
               </div>
@@ -395,24 +543,18 @@ function AtualizaCadastro() {
                   type="text"
                   id="cpfMae3"
                   value={cpfMae3Atualizado}
-                  placeholder="Digite o CPF da mãe"
+                  placeholder="Digite o CPF da mãe 3"
                   onChange={(e) => setCpfMae3Atualizado(e.target.value)}
                 ></input>
               </div>
             </div>
 
-            <div className="col-sm-12 col-lg-3 mt-2 mb-2">
-              <button
-                className="br-button primary"
-                type="button"
-                onClick={handleUpdate}
-              >
-                Atualizar Dados
-              </button>
-            </div>
+            <button className="br-button primary" onClick={handleUpdate}>
+              Atualizar
+            </button>
           </>
         ) : (
-          <p>Nenhum contribuinte encontrado com o CPF fornecido.</p>
+          <p>Nenhum contribuinte encontrado.</p>
         )}
       </div>
     </div>
