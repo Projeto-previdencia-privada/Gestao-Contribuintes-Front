@@ -16,6 +16,7 @@ import InfoPrev from "./Pages/InfoPrev.jsx";
 import Login from "./Pages/Login.jsx";
 import Home from "./Pages/Home";
 import EsqueceSenha from "./Pages/EsqueceSenha.jsx";
+import StatusContribuinte from "./Pages/StatusContribuinte.jsx";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -39,6 +40,7 @@ const AppContent = () => {
         <Route path="/infoContribuicao" element={<InfoPrev />} />
         <Route path="/cadastroDependentes" element={<CadastroDependentes />} />
         <Route path="/arvoreGenealogica" element={<ArvoreGenealogica />} />
+        <Route path="/statusContribuinte" element={<StatusContribuinte />} />
       </Routes>
       <Footer />
     </>

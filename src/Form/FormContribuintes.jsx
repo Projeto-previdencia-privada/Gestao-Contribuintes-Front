@@ -115,7 +115,7 @@ function Form() {
                 Nome Civil:
               </label>
             </div>
-          <div className="br-input input-inline">
+            <div className="br-input input-inline">
             <input
               type="text"
               id="nomeCivil"
@@ -123,7 +123,7 @@ function Form() {
               placeholder="Digite seu nome completo"
               onChange={(e) => setNomeCivil(e.target.value)}
             ></input>
-          </div>
+            </div>
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">

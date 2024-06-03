@@ -13,7 +13,8 @@ function AtualizaCadastro() {
   const [salarioAtualizado, setSalarioAtualizado] = useState("");
   const [categoriaAtualizado, setCategoriaAtualizado] = useState("");
   const [telefoneAtualizado, setTelefoneAtualizado] = useState("");
-  const [inicioContribuicaoAtualizado, setInicioContribuicaoAtualizado] = useState("");
+  const [inicioContribuicaoAtualizado, setInicioContribuicaoAtualizado] =
+    useState("");
   const [cpfConjugeAtualizado, setCpfConjugeAtualizado] = useState("");
   const [cpfPaiAtualizado, setCpfPaiAtualizado] = useState("");
   const [cpfMaeAtualizado, setCpfMaeAtualizado] = useState("");
@@ -112,7 +113,6 @@ function AtualizaCadastro() {
       console.error("Erro ao atualizar dados:", error);
     }
   };
-  
 
   return (
     <div className={styles.container}>
