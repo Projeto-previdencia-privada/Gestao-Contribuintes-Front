@@ -109,7 +109,7 @@ function Form() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/contribuintes", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

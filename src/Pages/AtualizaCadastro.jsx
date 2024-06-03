@@ -40,7 +40,7 @@ function AtualizaCadastro() {
   const handleSearch = async (cpf) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/contribuintes/cadastroAtualizacao/${cpf}`
+        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/cadastroAtualizacao/${cpf}`
       );
       if (response.status === 404) {
         setNotFoundMessage("O contribuinte não está cadastrado.");
@@ -158,7 +158,7 @@ function AtualizaCadastro() {
 }
 
       const response = await fetch(
-        `http://localhost:8080/contribuintes/${cpf}`,
+        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}`,
         {
           method: "PUT",
           headers: {

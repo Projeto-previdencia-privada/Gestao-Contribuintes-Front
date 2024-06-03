@@ -24,24 +24,18 @@ function Footer() {
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
-              <a className="br-item" href="http://localhost:5173">
+              <a className="br-item" href={process.env.REACT_APP_FRONT_URL}>
                 <div className="content">Home</div>
               </a>
-              <a
-                className="br-item"
-                href="http://localhost:5173/login"
-              >
+              <a className="br-item" href={process.env.REACT_APP_FRONT_URL + "/login"}>
                 <div className="content">Cadastro de Contribuintes</div>
               </a>
-              <a
-                className="br-item"
-                href="http://localhost:5173/login"
-              >
+              <a className="br-item" href={process.env.REACT_APP_FRONT_URL + "/login"}>
                 <div className="content">Cadastro de Dependentes</div>
               </a>
               <a
                 className="br-item"
-                href="http://localhost:5173/login"
+                href={process.env.REACT_APP_FRONT_URL + "/login"}
               >
                 <div className="content">Árvore Genealógica</div>
               </a>

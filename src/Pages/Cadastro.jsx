@@ -10,7 +10,7 @@ function Cadastro() {
   const handleSearch = async () => {
     try {
       setMensagemErro("");
-      const response = await fetch(`/contribuintes/${cpf}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}`);
       if (!response.ok) {
         if (response.status === 400) {
           throw new Error("400");

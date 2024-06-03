@@ -13,7 +13,7 @@ const Home = () => {
       <div className={styles.container}>
         <h1 className={styles.color}>Serviços</h1>
         <div>
-          <a href="http://localhost:5173/login">
+          <a href={`${process.env.REACT_APP_FRONT_URL}/login`}>
             <h3>Gestão de Contribuintes</h3>
           </a>
           <span className="br-divider my-3"></span>

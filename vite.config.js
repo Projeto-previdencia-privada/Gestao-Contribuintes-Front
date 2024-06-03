@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/contribuintes': 'http://localhost:8080'
+      '/contribuintes': 'http://192.168.37.11:8081'
     }
   }
 });

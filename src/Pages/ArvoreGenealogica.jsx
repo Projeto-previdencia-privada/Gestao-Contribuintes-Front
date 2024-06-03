@@ -11,9 +11,9 @@ function ArvoreGenealogica() {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      setMensagemErro(""); // Limpar mensagem de erro anterior
+      setMensagemErro("");
       const response = await fetch(
-        `http://localhost:8080/contribuintes/familia/${cpf}`
+        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/familia/${cpf}`
       );
       if (!response.ok) {
         if (response.status === 400) {

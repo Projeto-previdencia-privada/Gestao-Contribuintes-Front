@@ -56,7 +56,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="http://localhost:5173"
+                  href={process.env.REACT_APP_FRONT_URL}
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
@@ -66,7 +66,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="http://localhost:5173/login"
+                  href={process.env.REACT_APP_FRONT_URL + "/login"}
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>

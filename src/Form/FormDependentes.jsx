@@ -24,7 +24,7 @@ function FormDependente() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/contribuintes/${cpfContribuinte}/dependentes`,
+        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpfContribuinte}/dependentes`,
         {
           method: "POST",
           headers: {

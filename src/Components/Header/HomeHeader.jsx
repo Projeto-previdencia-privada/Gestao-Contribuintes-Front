@@ -15,7 +15,7 @@ function HomeHeader() {
               style={{ cursor: "pointer" }}
               className="header-logo"
               onClick={() =>
-                (window.location.href = "http://localhost:5173")
+                (window.location.href = process.env.REACT_APP_FRONT_URL)
               }
             >
               <img src={govbr} alt="Logo do GovBR" />
