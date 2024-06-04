@@ -2,6 +2,6 @@ version: '3.1'
 
 services:
   frontend:
-    image: front-gestao-contribuintes1:latest
+    image: front-gestao-contribuintes:latest
     ports:
       - "80:80"
