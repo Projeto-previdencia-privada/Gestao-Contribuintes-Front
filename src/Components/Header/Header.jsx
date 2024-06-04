@@ -4,6 +4,7 @@ import MenuButton from "../Botoes/ButtonMenu";
 import styles from "./Header.module.css";
 import ButtonAcess from "../Botoes/ButtonAcess";
 
+
 function Header() {
   return (
     <header className="br-header">
@@ -12,8 +13,8 @@ function Header() {
           <div className="header-logo">
             <div 
               style={{ cursor: 'pointer' }}
-              className="header-logo" 
-              onClick={() => (window.location.href = process.env.REACT_APP_FRONT_URL)}>
+              className="header-logo"
+              onClick={() => (window.location.href = "http://localhost:5173/")}>
               <img src={govbr} alt="Logo do GovBR" />
             </div>
           </div>

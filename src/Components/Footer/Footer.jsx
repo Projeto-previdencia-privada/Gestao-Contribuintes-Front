@@ -1,6 +1,7 @@
 import GovNegativa from "../../Img/govbrNegativa.svg";
 import AcessoImg from "../../Img/acessoInformacao.png";
 
+
 function Footer() {
   return (
     <footer className="br-footer">
@@ -24,18 +25,18 @@ function Footer() {
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
-              <a className="br-item" href={process.env.REACT_APP_FRONT_URL}>
+              <a className="br-item" href="http://localhost:5173/login">
                 <div className="content">Home</div>
               </a>
-              <a className="br-item" href={process.env.REACT_APP_FRONT_URL + "/login"}>
+              <a className="br-item" href="http://localhost:5173/login">
                 <div className="content">Cadastro de Contribuintes</div>
               </a>
-              <a className="br-item" href={process.env.REACT_APP_FRONT_URL + "/login"}>
+              <a className="br-item" href="http://localhost:5173/login">
                 <div className="content">Cadastro de Dependentes</div>
               </a>
               <a
                 className="br-item"
-                href={process.env.REACT_APP_FRONT_URL + "/login"}
+                href="http://localhost:5173/login"
               >
                 <div className="content">Árvore Genealógica</div>
               </a>

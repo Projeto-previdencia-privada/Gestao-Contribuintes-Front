@@ -29,6 +29,8 @@ function Form() {
   const [cpfMae3Error, setCpfMae3Error] = useState("");
   const [cpfConjugeError, setCpfConjugeError] = useState("");
 
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -109,7 +111,7 @@ function Form() {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes`, {
+      const response = await fetch(`${backendUrl}/contribuintes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

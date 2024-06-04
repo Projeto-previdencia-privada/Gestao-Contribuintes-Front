@@ -8,12 +8,14 @@ function ArvoreGenealogica() {
   const [loading, setLoading] = useState(false);
   const [mensagemErro, setMensagemErro] = useState("");
 
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSearch = async () => {
     try {
       setLoading(true);
       setMensagemErro("");
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/familia/${cpf}`
+        `${backendUrl}/contribuintes/familia/${cpf}`
       );
       if (!response.ok) {
         if (response.status === 400) {
@@ -67,6 +69,7 @@ function ArvoreGenealogica() {
         {node.avos &&
           node.avos.map((avo) => (
             <TreeNode
+              key={avo.cpf}
               label={
                 <div>
                   {avo.nomeCivil} ({avo.cpf})

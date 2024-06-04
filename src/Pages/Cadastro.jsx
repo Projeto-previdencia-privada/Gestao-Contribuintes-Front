@@ -7,10 +7,12 @@ function Cadastro() {
   const [contribuinte, setContribuinte] = useState(null);
   const [mensagemErro, setMensagemErro] = useState("");
 
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSearch = async () => {
     try {
       setMensagemErro("");
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}`);
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
       if (!response.ok) {
         if (response.status === 400) {
           throw new Error("400");

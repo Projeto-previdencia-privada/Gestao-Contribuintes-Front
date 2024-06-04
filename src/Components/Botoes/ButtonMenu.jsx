@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styles from "./ButtonMenu.module.css";
 
+const { REACT_APP_FRONT_URL } = import.meta.env;
+
 const MenuButton = ({ isOpenProp }) => {
   const [isOpen, setIsOpen] = useState(isOpenProp || false);
   const [contribuintesOpen, setContribuintesOpen] = useState(false);
@@ -56,7 +58,7 @@ const MenuButton = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href={process.env.REACT_APP_FRONT_URL}
+                  href = "http://localhost:5173/"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
@@ -78,7 +80,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={process.env.REACT_APP_FRONT_URL + "/cadastroContribuintes"}
+                      href = "http://localhost:5173/cadastroContribuintes"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -90,7 +92,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={process.env.REACT_APP_FRONT_URL + "/cadastro"}
+                      href = "http://localhost:5173/cadastro"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -102,7 +104,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={process.env.REACT_APP_FRONT_URL + "/atualizaCadastro"}
+                      href = "http://localhost:5173/atualizaCadastro"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -114,7 +116,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={process.env.REACT_APP_FRONT_URL + "/infoContribuicao"}
+                      href = "http://localhost:5173/infoContribuicao"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -146,7 +148,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={`${process.env.REACT_APP_FRONT_URL}/cadastroDependentes`}
+                      href="http://localhost:5173/cadastroDependentes"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -173,7 +175,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href={process.env.REACT_APP_FRONT_URL + "/arvoregenealogica"}
+                      href="http://localhost:5173/arvoregenealogica"
                       role="treeitem"
                     >
                       <span className="icon">

@@ -28,7 +28,7 @@ const StatusContribuinte = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/${searchCPF}`
+        `${import.meta.env.VITE_API_BASE_URL}/contribuintes/${searchCPF}`
       );
       if (!response.ok) {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
@@ -43,7 +43,7 @@ const StatusContribuinte = () => {
 
   const ativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}/ativar`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contribuintes/${cpf}/ativar`, {
         method: "PUT",
       });
       const data = await response.json();
@@ -56,7 +56,7 @@ const StatusContribuinte = () => {
 
   const inativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}/inativar`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contribuintes/${cpf}/inativar`, {
         method: "PUT",
       });
       const data = await response.json();

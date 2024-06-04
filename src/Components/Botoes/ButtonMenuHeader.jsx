@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ButtonMenu.module.css";
 
+
 const MenuButtonHeader = ({ isOpenProp }) => {
   const [isOpen, setIsOpen] = useState(isOpenProp || false);
   const [contribuintesOpen, setContribuintesOpen] = useState(false);
@@ -56,7 +57,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href={process.env.REACT_APP_FRONT_URL}
+                  href="http://localhost:5173"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
@@ -66,7 +67,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href={process.env.REACT_APP_FRONT_URL + "/login"}
+                  href="http://localhost:5173/login"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>

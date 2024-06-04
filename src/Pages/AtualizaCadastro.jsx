@@ -37,10 +37,12 @@ function AtualizaCadastro() {
     }
   }, [location]);
 
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSearch = async (cpf) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/cadastroAtualizacao/${cpf}`
+        `${backendUrl}/contribuintes/cadastroAtualizacao/${cpf}`
       );
       if (response.status === 404) {
         setNotFoundMessage("O contribuinte não está cadastrado.");
@@ -158,7 +160,7 @@ function AtualizaCadastro() {
 }
 
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpf}`,
+        `${backendUrl}/contribuintes/${cpf}`,
         {
           method: "PUT",
           headers: {

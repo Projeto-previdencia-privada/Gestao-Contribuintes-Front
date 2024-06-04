@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Home.module.css";
 
+
 const Home = () => {
+
   return (
     <div>
       <div className={styles.services}>
@@ -13,7 +15,7 @@ const Home = () => {
       <div className={styles.container}>
         <h1 className={styles.color}>Serviços</h1>
         <div>
-          <a href={`${process.env.REACT_APP_FRONT_URL}/login`}>
+          <a href="http://localhost:5173/login">
             <h3>Gestão de Contribuintes</h3>
           </a>
           <span className="br-divider my-3"></span>

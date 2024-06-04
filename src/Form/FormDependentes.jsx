@@ -12,6 +12,8 @@ function FormDependente() {
   const [mensagem, setMensagem] = useState(null);
   const [cpfError, setCpfError] = useState("");
 
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -24,7 +26,7 @@ function FormDependente() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/contribuintes/${cpfContribuinte}/dependentes`,
+        `${backendUrl}/contribuintes/${cpfContribuinte}/dependentes`,
         {
           method: "POST",
           headers: {
