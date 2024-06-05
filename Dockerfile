@@ -1,4 +1,4 @@
-# Etapa de construção
+
 FROM node:latest AS build
 
 WORKDIR /app
@@ -11,10 +11,11 @@ COPY . .
 
 RUN npm run build
 
-# Etapa de execução
 FROM nginx:latest
 
 COPY --from=build /app/dist /usr/share/nginx/html
+
+COPY --from=build /app/node_modules /usr/share/nginx/html/node_modules
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
