@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/',
   server: {
     proxy: {
-      '/contribuintes': 'http://192.168.37.11:8081'
-    }
-  }
+      '/contribuintes': 'http://192.168.37.11:8081',
+    },
+  },
 });
