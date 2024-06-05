@@ -25,18 +25,18 @@ function Footer() {
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
-              <a className="br-item" href="http://localhost:5173/login">
+              <a className="br-item" href="http://192.168.37.11:8080/login">
                 <div className="content">Home</div>
               </a>
-              <a className="br-item" href="http://localhost:5173/login">
+              <a className="br-item" href="http://192.168.37.11:8080/login">
                 <div className="content">Cadastro de Contribuintes</div>
               </a>
-              <a className="br-item" href="http://localhost:5173/login">
+              <a className="br-item" href="http://192.168.37.11:8080/login">
                 <div className="content">Cadastro de Dependentes</div>
               </a>
               <a
                 className="br-item"
-                href="http://localhost:5173/login"
+                href="http://192.168.37.11:8080/login"
               >
                 <div className="content">Árvore Genealógica</div>
               </a>

@@ -28,5 +28,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "vite": "^5.2.11"
-  }
+  },
+  "proxy": "http://192.168.37.11:8081"
 }

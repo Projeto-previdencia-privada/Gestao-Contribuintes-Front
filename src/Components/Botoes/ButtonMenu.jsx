@@ -58,7 +58,7 @@ const MenuButton = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href = "http://localhost:5173/"
+                  href = "http://192.168.37.11:8080/"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
@@ -80,7 +80,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href = "http://localhost:5173/cadastroContribuintes"
+                      href = "http://192.168.37.11:8080/cadastroContribuintes"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -92,7 +92,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href = "http://localhost:5173/cadastro"
+                      href = "http://192.168.37.11:8080/cadastro"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -104,7 +104,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href = "http://localhost:5173/atualizaCadastro"
+                      href = "http://192.168.37.11:8080/atualizaCadastro"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -116,7 +116,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href = "http://localhost:5173/infoContribuicao"
+                      href = "http://192.168.37.11:8080/infoContribuicao"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -148,7 +148,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href="http://localhost:5173/cadastroDependentes"
+                      href="http://192.168.37.11:8080/cadastroDependentes"
                       role="treeitem"
                     >
                       <span className="icon">
@@ -175,7 +175,7 @@ const MenuButton = ({ isOpenProp }) => {
                   <li>
                     <a
                       className="menu-item"
-                      href="http://localhost:5173/arvoregenealogica"
+                      href="http://192.168.37.11:8080/arvoregenealogica"
                       role="treeitem"
                     >
                       <span className="icon">
