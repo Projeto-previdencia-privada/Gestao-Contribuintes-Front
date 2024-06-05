@@ -6,7 +6,11 @@ export default defineConfig({
   base: '/',
   server: {
     proxy: {
-      '/contribuintes': 'http://192.168.37.11:8081',
-    },
-  },
+      '/contribuintes': {
+        target: 'http://192.168.37.11:8081',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/contribuintes/, '')
+      }
+    }
+  }
 });
