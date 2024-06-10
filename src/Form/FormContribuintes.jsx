@@ -40,46 +40,51 @@ function Form() {
     } else {
       setCpfError("");
     }
-    if (cpfPai.trim() === "" || !/^\d{11}$/.test(cpfPai)) {
+
+    if (cpfPai.trim() !== "" && !/^\d{11}$/.test(cpfPai)) {
       setCpfPaiError("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfPaiError("");
     }
-    if (cpfPai2.trim() === "" || !/^\d{11}$/.test(cpfPai2)) {
+
+    if (cpfPai2.trim() !== "" && !/^\d{11}$/.test(cpfPai2)) {
       setCpfPai2Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfPai2Error("");
     }
-    if (cpfPai3.trim() === "" || !/^\d{11}$/.test(cpfPai3)) {
+
+    if (cpfPai3.trim() !== "" && !/^\d{11}$/.test(cpfPai3)) {
       setCpfPai3Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfPai3Error("");
     }
-    if (cpfMae.trim() === "" || !/^\d{11}$/.test(cpfMae)) {
+
+    if (cpfMae.trim() !== "" && !/^\d{11}$/.test(cpfMae)) {
       setCpfMaeError("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfMaeError("");
     }
-    if (cpfMae2.trim() === "" || !/^\d{11}$/.test(cpfMae2)) {
+
+    if (cpfMae2.trim() !== "" && !/^\d{11}$/.test(cpfMae2)) {
       setCpfMae2Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfMae2Error("");
     }
-    if (cpfMae3.trim() === "" || !/^\d{11}$/.test(cpfMae3)) {
+
+    if (cpfMae3.trim() !== "" && !/^\d{11}$/.test(cpfMae3)) {
       setCpfMae3Error("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfMae3Error("");
     }
-    if (cpfConjuge.trim() === "" || !/^\d{11}$/.test(cpfConjuge)) {
-      setCpfConjugeError(
-        "CPF inválido. Deve conter apenas números e 11 dígitos."
-      );
+
+    if (cpfConjuge.trim() !== "" && !/^\d{11}$/.test(cpfConjuge)) {
+      setCpfConjugeError("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
       setCpfConjugeError("");
@@ -335,11 +340,9 @@ function Form() {
               value={cpfConjuge}
               placeholder="Digite o cpf do conjuge"
               onChange={(e) => {
-                setCpfConjuge(e.target.value);
-                if (
-                  e.target.value.trim() === "" ||
-                  !/^\d{11}$/.test(e.target.value)
-                ) {
+                const value = e.target.value;
+                setCpfConjuge(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                   setCpfConjugeError(
                     "CPF inválido. Deve conter apenas números e 11 dígitos."
                   );
@@ -361,7 +364,7 @@ function Form() {
 
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
-            <label className="text-nowrap" htmlFor="lateral">
+            <label className="text-nowrap" htmlFor="cpfPai">
               Cpf Pai:
             </label>
           </div>
@@ -372,11 +375,9 @@ function Form() {
               value={cpfPai}
               placeholder="Digite o cpf do pai"
               onChange={(e) => {
-                setCpfPai(e.target.value);
-                if (
-                  e.target.value.trim() === "" ||
-                  !/^\d{11}$/.test(e.target.value)
-                ) {
+                const value = e.target.value;
+                setCpfPai(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                   setCpfPaiError(
                     "CPF inválido. Deve conter apenas números e 11 dígitos."
                   );
@@ -409,11 +410,9 @@ function Form() {
               value={cpfMae}
               placeholder="Digite o cpf da mae"
               onChange={(e) => {
-                setCpfMae(e.target.value);
-                if (
-                  e.target.value.trim() === "" ||
-                  !/^\d{11}$/.test(e.target.value)
-                ) {
+                const value = e.target.value;
+                setCpfMae(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                   setCpfMaeError(
                     "CPF inválido. Deve conter apenas números e 11 dígitos."
                   );
@@ -460,11 +459,9 @@ function Form() {
                   value={cpfPai2}
                   placeholder="Digite o cpf do pai"
                   onChange={(e) => {
-                    setCpfPai2(e.target.value);
-                    if (
-                      e.target.value.trim() === "" ||
-                      !/^\d{11}$/.test(e.target.value)
-                    ) {
+                    const value = e.target.value;
+                    setCpfPai2(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                       setCpfPai2Error(
                         "CPF inválido. Deve conter apenas números e 11 dígitos."
                       );
@@ -497,11 +494,9 @@ function Form() {
                   value={cpfMae2}
                   placeholder="Digite o cpf da mae2"
                   onChange={(e) => {
-                    setCpfMae2(e.target.value);
-                    if (
-                      e.target.value.trim() === "" ||
-                      !/^\d{11}$/.test(e.target.value)
-                    ) {
+                    const value = e.target.value;
+                    setCpfMae2(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                       setCpfMae2Error(
                         "CPF inválido. Deve conter apenas números e 11 dígitos."
                       );
@@ -534,11 +529,9 @@ function Form() {
                   value={cpfPai3}
                   placeholder="Digite o cpf do pai3"
                   onChange={(e) => {
-                    setCpfPai3(e.target.value);
-                    if (
-                      e.target.value.trim() === "" ||
-                      !/^\d{11}$/.test(e.target.value)
-                    ) {
+                    const value = e.target.value;
+                    setCpfPai3(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                       setCpfPai3Error(
                         "CPF inválido. Deve conter apenas números e 11 dígitos."
                       );
@@ -571,11 +564,9 @@ function Form() {
                   value={cpfMae3}
                   placeholder="Digite o cpf da mae3"
                   onChange={(e) => {
-                    setCpfMae3(e.target.value);
-                    if (
-                      e.target.value.trim() === "" ||
-                      !/^\d{11}$/.test(e.target.value)
-                    ) {
+                    const value = e.target.value;
+                    setCpfMae3(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
                       setCpfMae3Error(
                         "CPF inválido. Deve conter apenas números e 11 dígitos."
                       );

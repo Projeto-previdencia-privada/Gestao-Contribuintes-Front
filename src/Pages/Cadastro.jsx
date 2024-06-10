@@ -12,7 +12,7 @@ function Cadastro() {
   const handleSearch = async () => {
     try {
       setMensagemErro("");
-      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
+      const response = await fetch(`${backendUrl}/contribuintes/cadastroAtualizacao/${cpf}`);
       if (!response.ok) {
         if (response.status === 400) {
           throw new Error("400");
@@ -23,6 +23,7 @@ function Cadastro() {
         }
       }
       const data = await response.json();
+      console.log("Dados recebidos da API:", data);
       setContribuinte(data.info);
     } catch (error) {
       if (error.message === "400") {
@@ -30,7 +31,7 @@ function Cadastro() {
           `<div class="br-message danger">
             <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
             <div class="content" aria-label="CPF inválido." role="alert">
-              <span class="message-title">O cpf não é válido.</span>
+              <span class="message-title">O CPF não é válido.</span>
             </div>
           </div>`
         );
@@ -86,59 +87,59 @@ function Cadastro() {
               </div>
               <span className="br-divider"></span>
               <div className="br-item" role="listitem">
-                CPF: {contribuinte.cpf}
+                CPF: {contribuinte.cpf || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Nome Civil: {contribuinte.nomeCivil}
+                Nome Civil: {contribuinte.nomeCivil || "Não informado"}
               </div>
-              {contribuinte.nomeSocial && contribuinte.nomeSocial !== "" && (
+              {contribuinte.nomeSocial && (
                 <div className="br-item" role="listitem">
                   Nome Social: {contribuinte.nomeSocial}
                 </div>
               )}
               <div className="br-item" role="listitem">
-                Endereço: {contribuinte.endereco}
+                Endereço: {contribuinte.endereco || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Email: {contribuinte.email}
+                Email: {contribuinte.email || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Salário: {contribuinte.salario}
+                Salário: {contribuinte.salario || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Categoria: {contribuinte.categoria}
+                Categoria: {contribuinte.categoria || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Telefone: {contribuinte.telefone}
+                Telefone: {contribuinte.telefone || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Início da Contribuição: {contribuinte.inicioContribuicao}
+                Início da Contribuição: {contribuinte.inicioContribuicao || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                CPF Conjuge: {contribuinte.cpfConjuge}
+                CPF Conjuge: {contribuinte.cpfConjuge || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                CPF Pai: {contribuinte.cpfPai}
+                CPF Pai: {contribuinte.cpfPai || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                CPF Mãe: {contribuinte.cpfMae}
+                CPF Mãe: {contribuinte.cpfMae || "Não informado"}
               </div>
-              {contribuinte.cpfPai2 && contribuinte.cpfPai2 !== "" && (
+              {contribuinte.cpfPai2 && (
                 <div className="br-item" role="listitem">
                   CPF Pai 2: {contribuinte.cpfPai2}
                 </div>
               )}
-              {contribuinte.cpfMae2 && contribuinte.cpfMae2 !== "" && (
+              {contribuinte.cpfMae2 && (
                 <div className="br-item" role="listitem">
                   CPF Mãe 2: {contribuinte.cpfMae2}
                 </div>
               )}
-              {contribuinte.cpfPai3 && contribuinte.cpfPai3 !== "" && (
+              {contribuinte.cpfPai3 && (
                 <div className="br-item" role="listitem">
                   CPF Pai 3: {contribuinte.cpfPai3}
                 </div>
               )}
-              {contribuinte.cpfMae3 && contribuinte.cpfMae3 !== "" && (
+              {contribuinte.cpfMae3 && (
                 <div className="br-item" role="listitem">
                   CPF Mãe 3: {contribuinte.cpfMae3}
                 </div>
