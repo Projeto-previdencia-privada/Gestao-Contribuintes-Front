@@ -77,7 +77,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="#"
+                  href="http://192.168.37.8:3000/"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>

@@ -21,7 +21,7 @@ const Home = () => {
           <span className="br-divider my-3"></span>
         </div>
         <div>
-          <a href="http://192.168.37.10:8080/home">
+          <a href="http://192.168.37.8:3000/">
           <h3>Gestão de Contribuição</h3>
           </a>
           <span className="br-divider my-3"></span>

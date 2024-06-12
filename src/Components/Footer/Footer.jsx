@@ -54,7 +54,7 @@ function Footer() {
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
-              <a className="br-item" href="#">
+              <a className="br-item" href="http://192.168.37.8:3000/">
                 <div className="content">Gestão de Contribuição</div>
               </a>
               <a className="br-item" href="#">

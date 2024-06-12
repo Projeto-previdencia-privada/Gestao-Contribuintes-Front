@@ -84,7 +84,9 @@ function Form() {
     }
 
     if (cpfConjuge.trim() !== "" && !/^\d{11}$/.test(cpfConjuge)) {
-      setCpfConjugeError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      setCpfConjugeError(
+        "CPF inválido. Deve conter apenas números e 11 dígitos."
+      );
       return;
     } else {
       setCpfConjugeError("");
