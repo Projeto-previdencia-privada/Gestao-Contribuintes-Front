@@ -15,7 +15,7 @@ const Home = () => {
       <div className={styles.container}>
         <h1 className={styles.color}>Serviços</h1>
         <div>
-          <a href="http://192.168.37.11:8080/login">
+          <a href="http://192.168.37.8:8090/login">
             <h3>Gestão de Contribuintes</h3>
           </a>
           <span className="br-divider my-3"></span>

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/contribuintes': {
-        target: 'http://192.168.37.11:8081',
+        target: 'http://192.168.37.18:8081',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/contribuintes/, '')
       }
