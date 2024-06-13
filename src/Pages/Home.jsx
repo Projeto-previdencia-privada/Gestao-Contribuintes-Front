@@ -27,12 +27,16 @@ const Home = () => {
           <span className="br-divider my-3"></span>
         </div>
         <div>
+          <a href="http://192.168.37.8:5300/">
           <h3>Gestão de Benefícios</h3>
           <span className="br-divider my-3"></span>
+          </a>
         </div>
         <div>
+          <a href="http://192.168.37.8:8080/">
           <h3>Gestão de Empréstimos</h3>
           <span className="br-divider my-3"></span>
+          </a>
         </div>
       </div>
     </div>
