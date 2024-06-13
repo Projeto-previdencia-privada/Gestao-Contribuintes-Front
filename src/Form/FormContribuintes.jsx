@@ -28,8 +28,13 @@ function Form() {
   const [cpfMae2Error, setCpfMae2Error] = useState("");
   const [cpfMae3Error, setCpfMae3Error] = useState("");
   const [cpfConjugeError, setCpfConjugeError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const handleCloseMessage = () => {
+    setSuccessMessage("");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -92,10 +97,15 @@ function Form() {
       setCpfConjugeError("");
     }
 
-    const formattedInicioContribuicao = format(
-      new Date(inicioContribuicao),
-      "dd/MM/yyyy"
-    );
+    let formattedInicioContribuicao = "";
+    if (inicioContribuicao) {
+        try {
+            formattedInicioContribuicao = format(new Date(inicioContribuicao), "dd/MM/yyyy");
+        } catch (error) {
+            console.error("Erro na formatação da data:", error);
+            return;
+        }
+    }
 
     const data = {
       cpf,
@@ -149,6 +159,8 @@ function Form() {
       setCpfMae2("");
       setCpfPai3("");
       setCpfMae3("");
+
+      setSuccessMessage("Cadastro do contribuinte realizado com sucesso!");
     } catch (error) {
       console.error("Erro:", error);
     }
@@ -156,7 +168,33 @@ function Form() {
 
   return (
     <div className={styles.form}>
-      <h1 className={styles.h1}>Cadastro de Contribuinte</h1>
+    <h1 className={styles.h1}>Cadastro de Contribuinte</h1>
+
+    {successMessage && (
+      <div className="br-message success">
+        <div className="icon">
+          <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
+        </div>
+        <div
+          className="content"
+          aria-label="Sucesso. Os dados foram registrados!."
+          role="alert"
+        >
+          <span className="message-title">Sucesso.</span>
+          <span className="message-body">{successMessage}</span>
+        </div>
+        <div className="close">
+          <button
+            className="br-button circle small"
+            type="button"
+            aria-label="Fechar a mensagem alerta"
+            onClick={handleCloseMessage}
+          >
+            <i className="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    )}
       <form onSubmit={handleSubmit}>
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">

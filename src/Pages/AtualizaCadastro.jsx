@@ -305,7 +305,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="nomeCivil"
                   value={nomeCivilAtualizado}
-                  placeholder="Digite seu nome civil"
+                  placeholder="Digite o nome civil"
                   onChange={(e) => setNomeCivilAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -322,7 +322,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="nomeSocial"
                   value={nomeSocialAtualizado}
-                  placeholder="Digite seu nome social"
+                  placeholder="Digite o nome social"
                   onChange={(e) => setNomeSocialAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -339,7 +339,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="endereco"
                   value={enderecoAtualizado}
-                  placeholder="Digite seu endereço"
+                  placeholder="Digite o endereço"
                   onChange={(e) => setEnderecoAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -356,7 +356,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="email"
                   value={emailAtualizado}
-                  placeholder="Digite seu email"
+                  placeholder="Digite o email"
                   onChange={(e) => setEmailAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -373,7 +373,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="telefone"
                   value={telefoneAtualizado}
-                  placeholder="Digite seu telefone"
+                  placeholder="Digite o telefone"
                   onChange={(e) => setTelefoneAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -390,7 +390,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="salario"
                   value={salarioAtualizado}
-                  placeholder="Digite seu salário"
+                  placeholder="Digite o salário"
                   onChange={(e) => setSalarioAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -407,7 +407,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="categoria"
                   value={categoriaAtualizado}
-                  placeholder="Digite sua categoria"
+                  placeholder="Digite a categoria"
                   onChange={(e) => setCategoriaAtualizado(e.target.value)}
                 ></input>
               </div>
@@ -424,7 +424,7 @@ function AtualizaCadastro() {
                   type="text"
                   id="inicioContribuicao"
                   value={inicioContribuicaoAtualizado}
-                  placeholder="Digite sua data de início de contribuição"
+                  placeholder="Digite a data inicial de contribuição"
                   onChange={(e) =>
                     setInicioContribuicaoAtualizado(e.target.value)
                   }
