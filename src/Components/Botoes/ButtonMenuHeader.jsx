@@ -87,7 +87,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="#"
+                  href="http://192.168.37.8:5300/"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
@@ -97,7 +97,7 @@ const MenuButtonHeader = ({ isOpenProp }) => {
                 <a
                   className="menu-item"
                   role="treeitem"
-                  href="#"
+                  href="http://192.168.37.8:8080/"
                 >
                   <span className="icon">
                     <i className="fas fa-bell" aria-hidden="true"></i>
