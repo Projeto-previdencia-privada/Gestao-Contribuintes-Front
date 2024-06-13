@@ -18,3 +18,9 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Ocultos no Github
+node_modules/
+dist/
+.env
+package-lock.json
