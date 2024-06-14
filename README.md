@@ -4,7 +4,7 @@ Este é o repositório do front-end para o sistema de Gestão de Contribuintes. 
 
 ## Descrição
 
-Este projeto se trata do desenvolvimento da interface de usuário. Desenvolvida em React.js para interagir com o back-end do sistema de Gestão de Contribuintes. Ele oferece funcionalidades como login, cadastro de contribuintes, atualização de dados, adição de dependentes e muito mais.
+Este projeto se trata do desenvolvimento da interface de usuário. Desenvolvida em React.js+Vite para interagir com o back-end do sistema de Gestão de Contribuintes. Ele oferece funcionalidades como login, cadastro de contribuintes, atualização de dados, adição de dependentes, consultar arvore genealógica dos contribuintes cadastrados, consultar os dados dos contribuintes.
 
 ## Funcionalidades
 
