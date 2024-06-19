@@ -1,6 +1,4 @@
 import GovNegativa from "../../Img/govbrNegativa.svg";
-import AcessoImg from "../../Img/acessoInformacao.png";
-
 
 function Footer() {
   return (
