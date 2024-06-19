@@ -131,8 +131,11 @@ input.error {
 }
 
 .britem {
-  padding: 40px;
-  cursor: pointer;
+    padding: 5px;
+    cursor: pointer;
+    width: 226px;
+    height: 25px;
+    margin-bottom: 15px;
 }
 
 .britem:hover {
