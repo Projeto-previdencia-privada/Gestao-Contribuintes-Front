@@ -10,6 +10,7 @@ function Form() {
   const [email, setEmail] = useState("");
   const [salario, setSalario] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
   const [inicioContribuicao, setInicioContribuicao] = useState("");
   const [cpfConjuge, setCpfConjuge] = useState("");
@@ -34,6 +35,23 @@ function Form() {
 
   const handleCloseMessage = () => {
     setSuccessMessage("");
+  };
+
+  const categorias = [
+    { id: "Categoria 1", label: "Contribuinte Individual" },
+    { id: "Categoria 2", label: "MEI" },
+    { id: "Categoria 3", label: "Empregado" },
+    { id: "Categoria 4", label: "Trabalhador Avulso" },
+    { id: "Categoria 5", label: "Empregado Domestico" },
+  ];
+
+  const toggleListVisibility = () => {
+    setIsListVisible(!isListVisible);
+  };
+
+  const handleCategorySelect = (id, label) => {
+    setCategoria(label);
+    setIsListVisible(false);
   };
 
   const handleSubmit = async (event) => {
@@ -99,12 +117,15 @@ function Form() {
 
     let formattedInicioContribuicao = "";
     if (inicioContribuicao) {
-        try {
-            formattedInicioContribuicao = format(new Date(inicioContribuicao), "dd/MM/yyyy");
-        } catch (error) {
-            console.error("Erro na formatação da data:", error);
-            return;
-        }
+      try {
+        formattedInicioContribuicao = format(
+          new Date(inicioContribuicao),
+          "dd/MM/yyyy"
+        );
+      } catch (error) {
+        console.error("Erro na formatação da data:", error);
+        return;
+      }
     }
 
     const data = {
@@ -168,33 +189,33 @@ function Form() {
 
   return (
     <div className={styles.form}>
-    <h1 className={styles.h1}>Cadastro de Contribuinte</h1>
+      <h1 className={styles.h1}>Cadastro de Contribuinte</h1>
 
-    {successMessage && (
-      <div className="br-message success">
-        <div className="icon">
-          <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
-        </div>
-        <div
-          className="content"
-          aria-label="Sucesso. Os dados foram registrados!."
-          role="alert"
-        >
-          <span className="message-title">Sucesso.</span>
-          <span className="message-body">{successMessage}</span>
-        </div>
-        <div className="close">
-          <button
-            className="br-button circle small"
-            type="button"
-            aria-label="Fechar a mensagem alerta"
-            onClick={handleCloseMessage}
+      {successMessage && (
+        <div className="br-message success">
+          <div className="icon">
+            <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Sucesso. Os dados foram registrados!."
+            role="alert"
           >
-            <i className="fas fa-times" aria-hidden="true"></i>
-          </button>
+            <span className="message-title">Sucesso.</span>
+            <span className="message-body">{successMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
       <form onSubmit={handleSubmit}>
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
@@ -320,20 +341,47 @@ function Form() {
 
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
-            <label className="text-nowrap" htmlFor="lateral">
+            <label className="text-nowrap" htmlFor="categoria">
               Categoria:
             </label>
           </div>
-          <div className="br-input input-inline">
-            <input
-              type="text"
-              id="categoria"
-              value={categoria}
-              placeholder="Digite a categoria"
-              onChange={(e) => setCategoria(e.target.value)}
-            ></input>
+          <div className={styles.brselect}>
+            <div className="br-input">
+              <input
+                id="categoria"
+                type="text"
+                placeholder="Selecione a categoria"
+                value={categoria}
+                readOnly
+                onClick={toggleListVisibility}
+              />
+              <button
+                className="br-button"
+                type="button"
+                aria-label="Exibir lista"
+                onClick={toggleListVisibility}
+              >
+                <i className="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            {isListVisible && (
+              <div className={`${styles.brlist} ${styles.active}`}>
+                {categorias.map((cat, index) => (
+                  <React.Fragment key={cat.id}>
+                    <div
+                      className={styles.britem}
+                      onClick={() => handleCategorySelect(cat.id, cat.label)}
+                    >
+                      {cat.label}
+                    </div>
+                    {index < categorias.length - 1 && <hr />}
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
           </div>
         </div>
+
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
             <label className="text-nowrap" htmlFor="lateral">

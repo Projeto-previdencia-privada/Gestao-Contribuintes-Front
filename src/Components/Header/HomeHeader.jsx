@@ -14,7 +14,7 @@ function HomeHeader() {
             <div
               style={{ cursor: "pointer" }}
               className="header-logo"
-              onClick={() => (window.location.href = "http://192.168.37.8:8090/")}
+              onClick={() => (window.location.href = "https://www.gov.br/pt-br")}
             >
               <img src={govbr} alt="Logo do GovBR" />
             </div>

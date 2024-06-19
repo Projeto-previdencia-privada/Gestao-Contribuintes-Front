@@ -4,9 +4,15 @@ function Footer() {
   return (
     <footer className="br-footer">
       <div className="container-lg">
-        <div className="logo">
-          <img src={GovNegativa} alt="Logo Negativa do GovBR" />
-        </div>
+      <div className="logo">
+            <a
+              style={{ cursor: "pointer"}}
+              className="logo"
+              onClick={() => (window.location.href = "https://www.gov.br/pt-br")}
+            >
+              <img src={GovNegativa} alt="Logo Negativa do GovBR" />
+            </a>
+          </div>
         <div
           className="br-list horizontal"
           data-toggle="data-toggle"
@@ -32,10 +38,7 @@ function Footer() {
               <a className="br-item" href="http://192.168.37.8:8090/login">
                 <div className="content">Cadastro de Dependentes</div>
               </a>
-              <a
-                className="br-item"
-                href="http://192.168.37.8:8090/login"
-              >
+              <a className="br-item" href="http://192.168.37.8:8090/login">
                 <div className="content">Árvore Genealógica</div>
               </a>
               <span className="br-divider d-md-none"></span>

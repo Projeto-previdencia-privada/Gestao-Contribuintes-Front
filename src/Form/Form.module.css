@@ -85,3 +85,56 @@ input.error {
   width: calc(100% - 20px);
 }
 
+.brselect {
+  position: relative;
+}
+
+.brselect .br-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.brselect .br-input input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.brselect .br-input button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-left: none;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.brlist {
+  position: absolute;
+  top: calc(100% + 0px);
+  right: 0;
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+.brlist.active {
+  display: block;
+}
+
+.britem {
+  padding: 40px;
+  cursor: pointer;
+}
+
+.britem:hover {
+  background-color: #f0f0f0;
+}
