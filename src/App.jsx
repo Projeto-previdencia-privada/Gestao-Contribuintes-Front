@@ -1,11 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import Footer from "./Components/Footer/Footer.jsx";
-import Header from "./Components/Header/Header.jsx";
-import HomeHeader from "./Components/Header/HomeHeader.jsx"
-import { AuthProvider } from "./Contexts/Auth.jsx";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+
 import useAuth from "./Hooks/useAuth.jsx";
+
+import HomeHeader from "./Components/Header/HomeHeader.jsx";
+import Header from "./Components/Header/Header.jsx";
+import Footer from "./Components/Footer/Footer.jsx";
 import ArvoreGenealogica from "./Pages/ArvoreGenealogica";
 import AtualizaCadastro from "./Pages/AtualizaCadastro.jsx";
 import Cadastro from "./Pages/Cadastro.jsx";
@@ -20,7 +26,7 @@ import StatusContribuinte from "./Pages/StatusContribuinte.jsx";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
-  return signed ? <Item /> : <CadastroContribuintes />;
+  return signed ? <Item /> : null;
 };
 
 const AppContent = () => {
@@ -28,13 +34,16 @@ const AppContent = () => {
 
   return (
     <>
-      {location.pathname === '/' ? <HomeHeader /> : <Header />}
+      {location.pathname === "/" ? <HomeHeader /> : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastroLogin" element={<CadastroLogin />} />
         <Route path="/esqueceuSenha" element={<EsqueceSenha />} />
-        <Route path="/cadastroContribuintes" element={<Private Item={CadastroContribuintes} />} />
+        <Route
+          path="/cadastroContribuintes"
+          element={<Private Item={CadastroContribuintes} />}
+        />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/atualizaCadastro" element={<AtualizaCadastro />} />
         <Route path="/infoContribuicao" element={<InfoPrev />} />
@@ -49,11 +58,9 @@ const AppContent = () => {
 
 const App = () => (
   <React.StrictMode>
-    <AuthProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AppContent />
+    </Router>
   </React.StrictMode>
 );
 

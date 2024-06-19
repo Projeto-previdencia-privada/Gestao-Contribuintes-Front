@@ -75,42 +75,34 @@ function Footer() {
                 <div className="d-flex">
                   <a
                     className="br-button circle"
-                    href="#"
+                    href="https://www.facebook.com/governodobrasil"
                     aria-label="Compartilhar por Facebook"
                   >
                     <i className="fab fa-facebook-f" aria-hidden="true"></i>
                   </a>
                   <a
                     className="br-button circle"
-                    href="#"
-                    aria-label="Compartilhar por Twitter"
+                    href="https://x.com/govbr"
+                    aria-label="Compartilhar por X"
                   >
                     <i className="fab fa-twitter" aria-hidden="true"></i>
                   </a>
                   <a
                     className="br-button circle"
-                    href="#"
+                    href="https://www.linkedin.com/company/governo-do-brasil/"
                     aria-label="Compartilhar por Linkedin"
                   >
                     <i className="fab fa-linkedin-in" aria-hidden="true"></i>
                   </a>
                   <a
                     className="br-button circle"
-                    href="#"
+                    href="https://www.whatsapp.com/channel/0029Va2zbqm7dmeR3lddrp38"
                     aria-label="Compartilhar por Whatsapp"
                   >
                     <i className="fab fa-whatsapp" aria-hidden="true"></i>
                   </a>
                 </div>
               </div>
-            </div>
-            <div className="col assigns text-right">
-              <img
-                className="ml-4"
-                src={AcessoImg}
-                alt="Acesso a informação"
-                style={{ width: "100%", height: "auto" }}
-              />
             </div>
           </div>
         </div>

@@ -70,7 +70,6 @@ export const useAuth = () => {
     return null;
   };
 
-  // Retorne os valores do contexto, não o Provider diretamente
   return { user, signed: !!user, signin, signup, signout, resetPassword };
 };
 
