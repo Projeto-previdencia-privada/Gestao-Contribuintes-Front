@@ -35,6 +35,7 @@ function FormDependente() {
         setContribuinte(data);
         setMensagem("Contribuinte encontrado.");
       } else {
+        setContribuinte(null);
         setMensagem(data.error || "Contribuinte não encontrado.");
       }
     } catch (error) {
@@ -86,6 +87,11 @@ function FormDependente() {
     setNomeCivil("");
   };
 
+  useEffect(() => {
+    setMensagem(null);
+    setContribuinte(null);
+  }, [cpfContribuinte]);
+
   return (
     <div className={styles.form}>
       <h1 className={styles.h1}>Cadastro de Dependentes</h1>
@@ -108,12 +114,6 @@ function FormDependente() {
             <i className="fas fa-search" aria-hidden="true"></i>
           </button>
         </div>
-      </div>
-      <div className="mb-3">
-        <span className="feedback info" role="alert">
-          <i className="fas fa-info-circle" aria-hidden="true"></i>Busque o CPF
-          do contribuinte ao qual deseja vincular um dependente.
-        </span>
       </div>
       {searchError && (
         <div className="mb-3">
@@ -187,6 +187,14 @@ function FormDependente() {
             </button>
           </form>
         </>
+      )}
+      {!contribuinte && (
+        <div className="mb-3">
+          <span className="feedback info" role="alert">
+            <i className="fas fa-info-circle" aria-hidden="true"></i>Busque o
+            CPF do contribuinte ao qual deseja vincular um dependente.
+          </span>
+        </div>
       )}
     </div>
   );
