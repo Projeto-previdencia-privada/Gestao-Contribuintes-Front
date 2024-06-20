@@ -127,12 +127,16 @@ function FormDependente() {
       {contribuinte && (
         <>
           <div>
-            <h2>Contribuinte Encontrado:</h2>
-            <p>Nome: {contribuinte.nome}</p>
-            <p>CPF: {contribuinte.cpf}</p>
+            <h2>Contribuinte Encontrado</h2>
+            <p>Cadastre o dependente:</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="br-input input-inline">
+            <div className="input-label">
+                <label className="text-nowrap" htmlFor="cpfDependente">
+                  CPF do dependente:
+                </label>
+              </div>
               <input
                 type="text"
                 id="cpfDependente"
