@@ -107,15 +107,14 @@ function FormDependente() {
           >
             <i className="fas fa-search" aria-hidden="true"></i>
           </button>
-          
         </div>
       </div>
       <div className="mb-3">
-            <span className="feedback info" role="alert">
-              <i className="fas fa-info-circle" aria-hidden="true"></i>Busque o CPF
-              do contribuinte ao qual deseja vincular um dependente.
-            </span>
-          </div>
+        <span className="feedback info" role="alert">
+          <i className="fas fa-info-circle" aria-hidden="true"></i>Busque o CPF
+          do contribuinte ao qual deseja vincular um dependente.
+        </span>
+      </div>
       {searchError && (
         <div className="mb-3">
           <span className="feedback danger" role="alert">
@@ -127,36 +126,37 @@ function FormDependente() {
       {contribuinte && (
         <>
           <div>
-            <h2>Contribuinte Encontrado</h2>
-            <p>Cadastre o dependente:</p>
+            <h2>Cadastre o dependente</h2>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="br-input input-inline">
-            <div className="input-label">
+              <div className="input-label">
                 <label className="text-nowrap" htmlFor="cpfDependente">
                   CPF do dependente:
                 </label>
               </div>
-              <input
-                type="text"
-                id="cpfDependente"
-                value={cpfDependente}
-                placeholder="Digite o CPF do dependente"
-                className={cpfError ? "error" : ""}
-                onChange={(e) => {
-                  setCpfDependente(e.target.value);
-                  if (
-                    e.target.value.trim() === "" ||
-                    !/^\d{11}$/.test(e.target.value)
-                  ) {
-                    setCpfError(
-                      "CPF inválido. Deve conter apenas números e 11 dígitos."
-                    );
-                  } else {
-                    setCpfError("");
-                  }
-                }}
-              />
+              <div className="br-input input-inline">
+                <input
+                  type="text"
+                  id="cpfDependente"
+                  value={cpfDependente}
+                  placeholder="Digite o CPF do dependente"
+                  className={cpfError ? "error" : ""}
+                  onChange={(e) => {
+                    setCpfDependente(e.target.value);
+                    if (
+                      e.target.value.trim() === "" ||
+                      !/^\d{11}$/.test(e.target.value)
+                    ) {
+                      setCpfError(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfError("");
+                    }
+                  }}
+                />
+              </div>
             </div>
             {cpfError && (
               <div className="mb-3">
