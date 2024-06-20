@@ -34,7 +34,7 @@ const AppContent = () => {
 
   return (
     <>
-      {location.pathname === "/" ? <HomeHeader /> : <Header />}
+      {location.pathname === "/" || location.pathname === "/login" ? <HomeHeader /> : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

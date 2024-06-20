@@ -23,9 +23,6 @@ function Footer() {
               <div className="content text-down-01 text-bold text-uppercase">
                 Navegação
               </div>
-              <div className="support">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </div>
             </div>
             <div className="br-list">
               <span className="br-divider d-md-none"></span>
@@ -48,9 +45,6 @@ function Footer() {
             <div className="br-item header">
               <div className="content text-down-01 text-bold text-uppercase">
                 Serviços
-              </div>
-              <div className="support">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
               </div>
             </div>
             <div className="br-list">

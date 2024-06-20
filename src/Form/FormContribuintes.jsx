@@ -240,9 +240,6 @@ function Form() {
           >
             <span className="message-title">Erro.</span>
             <span className="message-body">{errorMessage}</span>
-            <button className="close" onClick={() => setErrorMessage("")}>
-              <i className="fas fa-times" aria-hidden="true"></i>
-            </button>
           </div>
         </div>
       )}
