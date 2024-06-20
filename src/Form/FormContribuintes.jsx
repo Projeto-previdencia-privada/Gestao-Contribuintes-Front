@@ -30,6 +30,7 @@ function Form() {
   const [cpfMae3Error, setCpfMae3Error] = useState("");
   const [cpfConjugeError, setCpfConjugeError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -157,11 +158,17 @@ function Form() {
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Erro na requisição: " + response.statusText);
+        if (response.status === 400) {
+          setErrorMessage(result.error);
+        } else {
+          throw new Error("Erro na requisição: " + response.statusText);
+        }
+        return;
       }
 
-      const result = await response.json();
       console.log("Sucesso:", result);
 
       setCpf("");
@@ -184,6 +191,7 @@ function Form() {
       setSuccessMessage("Cadastro do contribuinte realizado com sucesso!");
     } catch (error) {
       console.error("Erro:", error);
+      setErrorMessage("Ocorreu um erro ao tentar realizar o cadastro.");
     }
   };
 
@@ -216,6 +224,29 @@ function Form() {
           </div>
         </div>
       )}
+
+      {errorMessage && (
+        <div className="br-message danger">
+          <div className="icon">
+            <i
+              className="fas fa-exclamation-triangle fa-lg"
+              aria-hidden="true"
+            ></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Erro. Ocorreu um erro ao tentar realizar o cadastro."
+            role="alert"
+          >
+            <span className="message-title">Erro.</span>
+            <span className="message-body">{errorMessage}</span>
+            <button className="close" onClick={() => setErrorMessage("")}>
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">

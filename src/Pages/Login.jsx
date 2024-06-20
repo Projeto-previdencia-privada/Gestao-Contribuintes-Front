@@ -13,7 +13,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
+
     if (!email || !password) {
       setErrorMessage("Preencha todos os campos");
       return;

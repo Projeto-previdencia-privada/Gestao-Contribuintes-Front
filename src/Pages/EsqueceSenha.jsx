@@ -10,7 +10,7 @@ const EsqueceSenha = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const { resetPassword } = useAuth();
@@ -19,17 +19,17 @@ const EsqueceSenha = () => {
     e.preventDefault();
 
     if (!email || !confirmEmail || !password || !confirmPassword) {
-      setError("Preencha todos os campos");
+      setErrorMessage("Preencha todos os campos");
       return;
     }
 
     if (email !== confirmEmail) {
-      setError("Os e-mails não são iguais");
+      setErrorMessage("Os e-mails não são iguais");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("As senhas não são iguais");
+      setErrorMessage("As senhas não são iguais");
       return;
     }
 
@@ -37,7 +37,7 @@ const EsqueceSenha = () => {
     const res = await resetPassword(email, password);
 
     if (res) {
-      setError(res);
+      setErrorMessage(res);
       return;
     }
 
@@ -52,14 +52,14 @@ const EsqueceSenha = () => {
       <form onSubmit={handleResetPassword}>
         <h1 className={styles.h1}>Recupere sua senha</h1>
 
-        {error && (
-          <div className="br-message error">
+        {errorMessage && (
+          <div className="br-message danger">
             <div className="icon">
-              <i className="fas fa-exclamation-circle fa-lg" aria-hidden="true"></i>
+              <i className="fas fa-times-circle fa-lg" aria-hidden="true"></i>
             </div>
-            <div className="content" role="alert">
-              <span className="message-title">Erro</span>
-              <span className="message-body">{error}</span>
+            <div className="content" aria-label={errorMessage} role="alert">
+              <span className="message-title">Erro.</span>
+              <span className="message-body">{errorMessage}</span>
             </div>
           </div>
         )}

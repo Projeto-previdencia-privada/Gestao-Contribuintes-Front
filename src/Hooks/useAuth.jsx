@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext({});
 
-export const useAuth = () => { 
+export const useAuth = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -19,17 +19,21 @@ export const useAuth = () => {
   }, []);
 
   const signin = (email, password) => {
+    if (!email || !password) {
+      return "Preencha todos os campos";
+    }
+
     const userStorage = JSON.parse(localStorage.getItem("users_db")) || [];
 
     const hasUser = userStorage.filter((user) => user.email === email);
 
     if (hasUser.length) {
-      if (hasUser[0].email === email && hasUser[0].password === password) {
+      if (hasUser[0].password === password) {
         const token = Math.random().toString(36).substring(2);
         localStorage.setItem("user_token", JSON.stringify({ email, token }));
-        setUser({ email, password });
+        setUser({ email, token });
 
-        return;
+        return null; // Retorno nulo para indicar sucesso
       } else {
         return "Email ou senha incorretos";
       }
@@ -60,11 +64,11 @@ export const useAuth = () => {
   const resetPassword = (email, newPassword) => {
     const storedUsers = JSON.parse(localStorage.getItem("users_db")) || [];
     const userIndex = storedUsers.findIndex((user) => user.email === email);
-  
+
     if (userIndex === -1) {
       return "Email não encontrado";
     }
-  
+
     storedUsers[userIndex].password = newPassword;
     localStorage.setItem("users_db", JSON.stringify(storedUsers));
     return null;
@@ -72,6 +76,5 @@ export const useAuth = () => {
 
   return { user, signed: !!user, signin, signup, signout, resetPassword };
 };
-
 
 export default useAuth;
