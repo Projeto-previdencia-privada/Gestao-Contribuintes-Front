@@ -5,19 +5,48 @@ import { useLocation } from "react-router-dom";
 function FormDependente() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const cpfContribuinte = queryParams.get("cpfContribuinte");
+  const cpfContribuinteQueryParam = queryParams.get("cpfContribuinte");
 
-  const [cpf, setCpf] = useState("");
+  const [cpfContribuinte, setCpfContribuinte] = useState(
+    cpfContribuinteQueryParam || ""
+  );
+  const [contribuinte, setContribuinte] = useState(null);
+  const [cpfDependente, setCpfDependente] = useState("");
   const [nomeCivil, setNomeCivil] = useState("");
   const [mensagem, setMensagem] = useState(null);
   const [cpfError, setCpfError] = useState("");
+  const [searchError, setSearchError] = useState("");
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const handleSearchContribuinte = async (cpf) => {
+    if (cpf.trim() === "" || !/^\d{11}$/.test(cpf)) {
+      setSearchError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setSearchError("");
+    }
+
+    try {
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setContribuinte(data);
+        setMensagem("Contribuinte encontrado.");
+      } else {
+        setMensagem(data.error || "Contribuinte não encontrado.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar contribuinte:", error);
+      setMensagem("Erro ao buscar contribuinte.");
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (cpf.trim() === "" || !/^\d{11}$/.test(cpf)) {
+    if (cpfDependente.trim() === "" || !/^\d{11}$/.test(cpfDependente)) {
       setCpfError("CPF inválido. Deve conter apenas números e 11 dígitos.");
       return;
     } else {
@@ -33,7 +62,7 @@ function FormDependente() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            cpf: cpf,
+            cpf: cpfDependente,
             nomeCivil: nomeCivil,
           }),
         }
@@ -53,7 +82,7 @@ function FormDependente() {
       setMensagem("Erro ao cadastrar dependente.");
     }
 
-    setCpf("");
+    setCpfDependente("");
     setNomeCivil("");
   };
 
@@ -61,58 +90,100 @@ function FormDependente() {
     <div className={styles.form}>
       <h1 className={styles.h1}>Cadastro de Dependentes</h1>
       {mensagem && <p>{mensagem}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="br-input input-inline">
+      <div className="col-sm-5 col-lg-5 mb-3">
+        <div className="br-input large input-button">
+          <label htmlFor="input-search-large">CPF do contribuinte:</label>
           <input
             type="text"
-            id="cpf"
-            value={cpf}
-            placeholder="Digite o cpf"
-            className={cpfError ? "error" : ""}
-            onChange={(e) => {
-              setCpf(e.target.value);
-              if (
-                e.target.value.trim() === "" ||
-                !/^\d{11}$/.test(e.target.value)
-              ) {
-                setCpfError(
-                  "CPF inválido. Deve conter apenas números e 11 dígitos."
-                );
-              } else {
-                setCpfError("");
-              }
-            }}
+            id="cpfContribuinte"
+            placeholder="Digite o CPF"
+            value={cpfContribuinte}
+            onChange={(e) => setCpfContribuinte(e.target.value)}
           />
+          <button
+            className="br-button"
+            onClick={() => handleSearchContribuinte(cpfContribuinte)}
+            aria-label="Buscar"
+          >
+            <i className="fas fa-search" aria-hidden="true"></i>
+          </button>
+          
         </div>
-        {cpfError && (
-          <div className="mb-3">
-            <span className="feedback danger" role="alert">
-              <i className="fas fa-times-circle" aria-hidden="true"></i>
-              {cpfError}
+      </div>
+      <div className="mb-3">
+            <span className="feedback info" role="alert">
+              <i className="fas fa-info-circle" aria-hidden="true"></i>Busque o CPF
+              do contribuinte ao qual deseja vincular um dependente.
             </span>
           </div>
-        )}
-
-        <div className="col-sm-20 col-lg-30 mb-2">
-          <div className="input-label">
-            <label className="text-nowrap" htmlFor="lateral">
-              Nome Civil:
-            </label>
-          </div>
-          <div className="br-input input-inline">
-            <input
-              type="text"
-              id="nomeCivil"
-              value={nomeCivil}
-              placeholder="Nome civil do dependente"
-              onChange={(e) => setNomeCivil(e.target.value)}
-            ></input>
-          </div>
+      {searchError && (
+        <div className="mb-3">
+          <span className="feedback danger" role="alert">
+            <i className="fas fa-times-circle" aria-hidden="true"></i>
+            {searchError}
+          </span>
         </div>
-        <button className={styles.button_dep} type="submit">
-          Enviar
-        </button>
-      </form>
+      )}
+      {contribuinte && (
+        <>
+          <div>
+            <h2>Contribuinte Encontrado:</h2>
+            <p>Nome: {contribuinte.nome}</p>
+            <p>CPF: {contribuinte.cpf}</p>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="br-input input-inline">
+              <input
+                type="text"
+                id="cpfDependente"
+                value={cpfDependente}
+                placeholder="Digite o CPF do dependente"
+                className={cpfError ? "error" : ""}
+                onChange={(e) => {
+                  setCpfDependente(e.target.value);
+                  if (
+                    e.target.value.trim() === "" ||
+                    !/^\d{11}$/.test(e.target.value)
+                  ) {
+                    setCpfError(
+                      "CPF inválido. Deve conter apenas números e 11 dígitos."
+                    );
+                  } else {
+                    setCpfError("");
+                  }
+                }}
+              />
+            </div>
+            {cpfError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfError}
+                </span>
+              </div>
+            )}
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="nomeCivil">
+                  Nome Civil:
+                </label>
+              </div>
+              <div className="br-input input-inline">
+                <input
+                  type="text"
+                  id="nomeCivil"
+                  value={nomeCivil}
+                  placeholder="Nome civil do dependente"
+                  onChange={(e) => setNomeCivil(e.target.value)}
+                />
+              </div>
+            </div>
+            <button className={styles.button_dep} type="submit">
+              Enviar
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 }
