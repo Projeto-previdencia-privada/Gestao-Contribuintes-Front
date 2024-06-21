@@ -5,6 +5,9 @@ const StatusContribuinte = () => {
   const [contribuintes, setContribuintes] = useState([]);
   const [searchCPF, setSearchCPF] = useState("");
   const [contribuinteEncontrado, setContribuinteEncontrado] = useState(null);
+  const [error, setError] = useState(null);
+
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     fetchContribuintes();
@@ -12,7 +15,10 @@ const StatusContribuinte = () => {
 
   const fetchContribuintes = async () => {
     try {
-      const response = await fetch("/contribuintes");
+      const response = await fetch(`${backendUrl}/contribuintes`);
+      if (!response.ok) {
+        throw new Error("Erro ao buscar dados da API: " + response.statusText);
+      }
       const data = await response.json();
 
       if (Array.isArray(data)) {
@@ -22,14 +28,13 @@ const StatusContribuinte = () => {
       }
     } catch (error) {
       console.error("Erro ao buscar contribuintes:", error);
+      setError(error.message);
     }
   };
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/contribuintes/${searchCPF}`
-      );
+      const response = await fetch(`${backendUrl}/contribuintes/${searchCPF}`);
       if (!response.ok) {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
@@ -38,38 +43,48 @@ const StatusContribuinte = () => {
       setSearchCPF("");
     } catch (error) {
       console.error("Erro ao buscar dados da API", error);
+      setError(error.message);
     }
   };
 
   const ativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contribuintes/${cpf}/ativar`, {
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}/ativar`, {
         method: "PUT",
       });
+      if (!response.ok) {
+        throw new Error("Erro ao ativar contribuinte: " + response.statusText);
+      }
       const data = await response.json();
       console.log(data);
       fetchContribuintes();
     } catch (error) {
       console.error("Erro ao ativar contribuinte:", error);
+      setError(error.message);
     }
   };
 
   const inativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contribuintes/${cpf}/inativar`, {
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}/inativar`, {
         method: "PUT",
       });
+      if (!response.ok) {
+        throw new Error("Erro ao inativar contribuinte: " + response.statusText);
+      }
       const data = await response.json();
       console.log(data);
       fetchContribuintes();
     } catch (error) {
       console.error("Erro ao inativar contribuinte:", error);
+      setError(error.message);
     }
   };
 
   return (
     <div className={styles.form}>
       <h1 className={styles.h1}>Ativar/Inativar Contribuinte</h1>
+      {error && <p className={styles.error}>{error}</p>}
       <div>
         <input
           type="text"

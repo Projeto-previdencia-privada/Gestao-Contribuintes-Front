@@ -126,7 +126,7 @@ function FormDependente() {
       {contribuinte && (
         <>
           <div>
-            <h2>Cadastre o dependente</h2>
+            <h2 className={styles.h1}>Cadastre o dependente</h2>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="col-sm-20 col-lg-30 mb-2">
