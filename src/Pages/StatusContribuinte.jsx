@@ -49,14 +49,16 @@ const StatusContribuinte = () => {
 
   const ativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${backendUrl}/contribuintes/${cpf}/ativar`, {
-        method: "PUT",
-      });
+      const response = await fetch(
+        `${backendUrl}/contribuintes/${cpf}/ativar`,
+        {
+          method: "PUT",
+        }
+      );
       if (!response.ok) {
         throw new Error("Erro ao ativar contribuinte: " + response.statusText);
       }
       await response.json();
-      // Atualize o status do contribuinte encontrado
       setContribuinteEncontrado((prev) => prev && { ...prev, ativo: true });
       fetchContribuintes();
     } catch (error) {
@@ -67,14 +69,18 @@ const StatusContribuinte = () => {
 
   const inativarContribuinte = async (cpf) => {
     try {
-      const response = await fetch(`${backendUrl}/contribuintes/${cpf}/inativar`, {
-        method: "PUT",
-      });
+      const response = await fetch(
+        `${backendUrl}/contribuintes/${cpf}/inativar`,
+        {
+          method: "PUT",
+        }
+      );
       if (!response.ok) {
-        throw new Error("Erro ao inativar contribuinte: " + response.statusText);
+        throw new Error(
+          "Erro ao inativar contribuinte: " + response.statusText
+        );
       }
       await response.json();
-      // Atualize o status do contribuinte encontrado
       setContribuinteEncontrado((prev) => prev && { ...prev, ativo: false });
       fetchContribuintes();
     } catch (error) {
@@ -87,14 +93,23 @@ const StatusContribuinte = () => {
     <div className={styles.form}>
       <h1 className={styles.h1}>Ativar/Inativar Contribuinte</h1>
       {error && <p className={styles.error}>{error}</p>}
-      <div>
-        <input
-          type="text"
-          value={searchCPF}
-          onChange={(e) => setSearchCPF(e.target.value)}
-          placeholder="Buscar CPF"
-        />
-        <button onClick={handleSearch}>Buscar</button>
+      <div className="col-sm-5 col-lg-5 mb-3">
+        <div className="br-input large input-button">
+          <label htmlFor="input-search-large">CPF do contribuinte:</label>
+          <input
+            type="text"
+            value={searchCPF}
+            onChange={(e) => setSearchCPF(e.target.value)}
+            placeholder="Buscar CPF"
+          />
+          <button
+            className="br-button"
+            onClick={handleSearch}
+            aria-label="Buscar"
+          >
+            <i className="fas fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
       <ul>
         {contribuinteEncontrado ? (
