@@ -100,7 +100,7 @@ const StatusContribuinte = () => {
             type="text"
             value={searchCPF}
             onChange={(e) => setSearchCPF(e.target.value)}
-            placeholder="Buscar CPF"
+            placeholder="Digite o CPF"
           />
           <button
             className="br-button"
@@ -115,7 +115,29 @@ const StatusContribuinte = () => {
         {contribuinteEncontrado ? (
           <li>
             {contribuinteEncontrado.nome} ({contribuinteEncontrado.cpf}) -{" "}
-            {contribuinteEncontrado.ativo ? "Ativo" : "Inativo"}
+            <div className="d-flex align-items-center mt-1">
+              {contribuinteEncontrado.ativo ? (
+                <>
+                  <span
+                    className="br-tag status bg-success large"
+                    aria-describedby="tag-status-03"
+                  ></span>
+                  <span className="ml-1" id="tag-status-03">
+                    Ativo
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span
+                    className="br-tag status bg-danger large"
+                    aria-describedby="tag-status-01"
+                  ></span>
+                  <span className="ml-1" id="tag-status-01">
+                    Inativo
+                  </span>
+                </>
+              )}
+            </div>
             <button
               onClick={() => ativarContribuinte(contribuinteEncontrado.cpf)}
             >
