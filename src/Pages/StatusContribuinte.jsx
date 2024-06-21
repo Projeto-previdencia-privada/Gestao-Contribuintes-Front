@@ -55,8 +55,9 @@ const StatusContribuinte = () => {
       if (!response.ok) {
         throw new Error("Erro ao ativar contribuinte: " + response.statusText);
       }
-      const data = await response.json();
-      console.log(data);
+      await response.json();
+      // Atualize o status do contribuinte encontrado
+      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: true });
       fetchContribuintes();
     } catch (error) {
       console.error("Erro ao ativar contribuinte:", error);
@@ -72,8 +73,9 @@ const StatusContribuinte = () => {
       if (!response.ok) {
         throw new Error("Erro ao inativar contribuinte: " + response.statusText);
       }
-      const data = await response.json();
-      console.log(data);
+      await response.json();
+      // Atualize o status do contribuinte encontrado
+      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: false });
       fetchContribuintes();
     } catch (error) {
       console.error("Erro ao inativar contribuinte:", error);
@@ -100,12 +102,12 @@ const StatusContribuinte = () => {
             {contribuinteEncontrado.nome} ({contribuinteEncontrado.cpf}) -{" "}
             {contribuinteEncontrado.ativo ? "Ativo" : "Inativo"}
             <button
-              onClick={() => ativarContribuinte(contribuinteEncontrado?.cpf)}
+              onClick={() => ativarContribuinte(contribuinteEncontrado.cpf)}
             >
               Ativar
             </button>
             <button
-              onClick={() => inativarContribuinte(contribuinteEncontrado?.cpf)}
+              onClick={() => inativarContribuinte(contribuinteEncontrado.cpf)}
             >
               Inativar
             </button>
