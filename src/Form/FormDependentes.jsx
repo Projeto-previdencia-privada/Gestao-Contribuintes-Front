@@ -129,7 +129,7 @@ function FormDependente() {
             <h2>Cadastre o dependente</h2>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="br-input input-inline">
+            <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="cpfDependente">
                   CPF do dependente:
