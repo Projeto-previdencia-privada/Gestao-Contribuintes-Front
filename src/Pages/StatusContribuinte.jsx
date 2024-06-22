@@ -47,44 +47,41 @@ const StatusContribuinte = () => {
     }
   };
 
-  const ativarContribuinte = async (cpf) => {
+  const atualizarStatusContribuinte = async (cpf, status) => {
     try {
       const response = await fetch(
-        `${backendUrl}/contribuintes/${cpf}/ativar`,
+        `${backendUrl}/contribuintes/${cpf}`,
         {
           method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cpf, status }), // Envia o status atualizado
         }
       );
       if (!response.ok) {
-        throw new Error("Erro ao ativar contribuinte: " + response.statusText);
+        throw new Error("Erro ao atualizar contribuinte: " + response.statusText);
       }
-      await response.json();
-      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: true });
-      fetchContribuintes();
+      const data = await response.json();
+      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: status });
+      fetchContribuinteDetalhado(cpf); // Fetch updated details
+      fetchContribuintes(); // Update list of contribuintes
     } catch (error) {
-      console.error("Erro ao ativar contribuinte:", error);
+      console.error("Erro ao atualizar contribuinte:", error);
       setError(error.message);
     }
   };
 
-  const inativarContribuinte = async (cpf) => {
+  const fetchContribuinteDetalhado = async (cpf) => {
     try {
-      const response = await fetch(
-        `${backendUrl}/contribuintes/${cpf}/inativar`,
-        {
-          method: "PUT",
-        }
-      );
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
       if (!response.ok) {
-        throw new Error(
-          "Erro ao inativar contribuinte: " + response.statusText
-        );
+        throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
-      await response.json();
-      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: false });
-      fetchContribuintes();
+      const data = await response.json();
+      setContribuinteEncontrado(data.info);
     } catch (error) {
-      console.error("Erro ao inativar contribuinte:", error);
+      console.error("Erro ao buscar dados da API", error);
       setError(error.message);
     }
   };
@@ -139,12 +136,12 @@ const StatusContribuinte = () => {
               )}
             </div>
             <button
-              onClick={() => ativarContribuinte(contribuinteEncontrado.cpf)}
+              onClick={() => atualizarStatusContribuinte(contribuinteEncontrado.cpf, true)}
             >
               Ativar
             </button>
             <button
-              onClick={() => inativarContribuinte(contribuinteEncontrado.cpf)}
+              onClick={() => atualizarStatusContribuinte(contribuinteEncontrado.cpf, false)}
             >
               Inativar
             </button>

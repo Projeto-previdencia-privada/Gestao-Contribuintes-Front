@@ -144,6 +144,19 @@ function Cadastro() {
                   CPF Mãe 3: {contribuinte.cpfMae3}
                 </div>
               )}
+              <div className="br-item" role="listitem">
+                Status: {contribuinte.ativo ? (
+                  <>
+                    <span className="br-tag status bg-success large" aria-describedby="tag-status-ativo"></span>
+                    <span className="ml-1" id="tag-status-ativo">Ativo</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="br-tag status bg-danger large" aria-describedby="tag-status-inativo"></span>
+                    <span className="ml-1" id="tag-status-inativo">Inativo</span>
+                  </>
+                )}
+              </div>
 
               <div className="p-3">
                 <Link to={`/atualizaCadastro?cpf=${contribuinte.cpf}`}>
