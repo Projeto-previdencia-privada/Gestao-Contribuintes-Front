@@ -145,7 +145,7 @@ function Cadastro() {
                 </div>
               )}
               <div className="br-item" role="listitem">
-                Status: {contribuinte.ativo ? (
+                Status: {contribuinte.status ? (
                   <>
                     <span className="br-tag status bg-success large" aria-describedby="tag-status-ativo"></span>
                     <span className="ml-1" id="tag-status-ativo">Ativo</span>
