@@ -96,7 +96,7 @@ function InfoPrev() {
               CPF: {contribuinte.cpf}
             </div>
             <div className="br-item" role="listitem">
-              Status: {contribuinte.status}
+              Status: {contribuinte.status ? "Ativo" : "Inativo"}
             </div>
           </div>
         )}
