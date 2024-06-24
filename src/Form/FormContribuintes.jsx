@@ -317,6 +317,7 @@ function Form() {
               onChange={(e) => setSalario(e.target.value)}
             />
           </div>
+
           <div className="col-sm-10 col-lg-15 mb-2">
             <label htmlFor="categoria">Categoria</label>
             <div className="br-input">
@@ -329,7 +330,7 @@ function Form() {
               </button>
               {isListVisible && (
                 <ul className="br-list">
-                  {categorias.map((aliquota) => (
+                  {categoriasUnicas.map((aliquota) => (
                     <li key={aliquota.id} onClick={() => handleCategorySelect(aliquota.id, aliquota.categoria)}>
                       {aliquota.categoria}
                     </li>
@@ -338,6 +339,7 @@ function Form() {
               )}
             </div>
           </div>
+
         </div>
         <div className="row">
           <div className="col-sm-10 col-lg-15 mb-2">
