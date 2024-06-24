@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import styles from "../Form/Form.module.css";
 
@@ -9,8 +9,7 @@ function Form() {
   const [endereco, setEndereco] = useState("");
   const [email, setEmail] = useState("");
   const [salario, setSalario] = useState("");
-  const [categorias, setCategorias] = useState([]);
-  const [selectedCategoria, setSelectedCategoria] = useState("");
+  const [categoria, setCategoria] = useState("");
   const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
   const [inicioContribuicao, setInicioContribuicao] = useState("");
@@ -35,32 +34,24 @@ function Form() {
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
-  useEffect(() => {
-    const fetchCategorias = async () => {
-      try {
-        const response = await fetch('http://192.168.37.18:8080/aliquotas');
-        const data = await response.json();
-        const categoriasUnicas = [...new Set(data.map(aliquota => aliquota.categoria))];
-        setCategorias(categoriasUnicas);
-      } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-      }
-    };
-  
-    fetchCategorias();
-  }, []);
-  
-
   const handleCloseMessage = () => {
     setSuccessMessage("");
   };
+
+  const categorias = [
+    { id: "Categoria 1", label: "Contribuinte Individual" },
+    { id: "Categoria 2", label: "MEI" },
+    { id: "Categoria 3", label: "Empregado" },
+    { id: "Categoria 4", label: "Trabalhador Avulso" },
+    { id: "Categoria 5", label: "Empregado Domestico" },
+  ];
 
   const toggleListVisibility = () => {
     setIsListVisible(!isListVisible);
   };
 
-  const handleCategorySelect = (categoria) => {
-    setSelectedCategoria(categoria);
+  const handleCategorySelect = (id, label) => {
+    setCategoria(label);
     setIsListVisible(false);
   };
 
@@ -145,7 +136,7 @@ function Form() {
       endereco,
       email,
       salario: parseFloat(salario).toFixed(2),
-      categoria: selectedCategoria,
+      categoria,
       telefone,
       inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
@@ -186,7 +177,7 @@ function Form() {
       setEndereco("");
       setEmail("");
       setSalario("");
-      setSelectedCategoria("");
+      setCategoria("");
       setTelefone("");
       setInicioContribuicao("");
       setCpfConjuge("");
@@ -255,222 +246,465 @@ function Form() {
 
       <form onSubmit={handleSubmit}>
         <div className="col-sm-20 col-lg-30 mb-2">
-          <label htmlFor="cpf">CPF</label>
-          <input
-            type="text"
-            className={`br-input ${cpfError ? "danger" : ""}`}
-            id="cpf"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-          />
-          {cpfError && <p className="text-danger">{cpfError}</p>}
-        </div>
-        <div className="row">
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="nomeCivil">Nome Civil</label>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              CPF:
+            </label>
+          </div>
+          <div className="br-input input-inline">
             <input
               type="text"
-              className="br-input"
+              id="cpf"
+              value={cpf}
+              placeholder="Digite o cpf"
+              onChange={(e) => {
+                setCpf(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfError("");
+                }
+              }}
+            />
+            {cpfError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfError}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Nome Civil:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="text"
               id="nomeCivil"
               value={nomeCivil}
+              placeholder="Digite o nome completo"
               onChange={(e) => setNomeCivil(e.target.value)}
-            />
+            ></input>
           </div>
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="nomeSocial">Nome Social</label>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Nome Social (opcional):
+            </label>
+          </div>
+          <div className="br-input input-inline">
             <input
               type="text"
-              className="br-input"
               id="nomeSocial"
               value={nomeSocial}
+              placeholder="Digite o nome que se identifica"
               onChange={(e) => setNomeSocial(e.target.value)}
-            />
+            ></input>
           </div>
         </div>
+
         <div className="col-sm-20 col-lg-30 mb-2">
-          <label htmlFor="endereco">Endereço</label>
-          <input
-            type="text"
-            className="br-input"
-            id="endereco"
-            value={endereco}
-            onChange={(e) => setEndereco(e.target.value)}
-          />
-        </div>
-        <div className="col-sm-20 col-lg-30 mb-2">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            className="br-input"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="row">
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="salario">Salário</label>
-            <input
-              type="number"
-              step="0.01"
-              className="br-input"
-              id="salario"
-              value={salario}
-              onChange={(e) => setSalario(e.target.value)}
-            />
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Endereço:
+            </label>
           </div>
-          <div className="col-sm-20 col-lg-30 mb-2">
-          <label htmlFor="categoria">Categorias</label>
-          <input
-            type="text"
-            className="br-input"
-            id="categoria"
-            name="categoria"
-            value={selectedCategoria}
-            onClick={toggleListVisibility}
-            onChange={(event) => setSelectedCategoria(event.target.value)}
-          />
-          {isListVisible && (
-            <ul className="br-list">
-              {categorias.map((categoria, index) => (
-                <li key={index} onClick={() => handleCategorySelect(categoria)}>
-                  {categoria}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="telefone">Telefone</label>
+          <div className="br-input input-inline">
             <input
               type="text"
-              className="br-input"
+              id="endereco"
+              value={endereco}
+              placeholder="Digite o endereço completo"
+              onChange={(e) => setEndereco(e.target.value)}
+            ></input>
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Email:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder="Digite o email"
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Salario:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="number"
+              id="salario"
+              value={salario}
+              placeholder="Digite o valor do salário atual"
+              onChange={(e) => setSalario(e.target.value)}
+            ></input>
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="categoria">
+              Categoria:
+            </label>
+          </div>
+          <div className={styles.brselect}>
+            <div className="br-input">
+              <input
+                id="categoria"
+                type="text"
+                placeholder="Selecione a categoria"
+                value={categoria}
+                readOnly
+                onClick={toggleListVisibility}
+              />
+              <button
+                className="br-button"
+                type="button"
+                aria-label="Exibir lista"
+                onClick={toggleListVisibility}
+              >
+                <i className="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            {isListVisible && (
+              <div className={`${styles.brlist} ${styles.active}`}>
+                {categorias.map((cat, index) => (
+                  <React.Fragment key={cat.id}>
+                    <div
+                      className={styles.britem}
+                      onClick={() => handleCategorySelect(cat.id, cat.label)}
+                    >
+                      {cat.label}
+                    </div>
+                    {index < categorias.length - 1 && <hr />}
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Telefone:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="text"
               id="telefone"
+              placeholder="Digite o número de telefone"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
-            />
+            ></input>
           </div>
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="inicioContribuicao">Início da Contribuição</label>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Inicio da Contribuição:
+            </label>
+          </div>
+          <div className="br-input input-inline">
             <input
               type="date"
-              className="br-input"
               id="inicioContribuicao"
               value={inicioContribuicao}
               onChange={(e) => setInicioContribuicao(e.target.value)}
-            />
+            ></input>
           </div>
         </div>
+
         <div className="col-sm-20 col-lg-30 mb-2">
-          <label htmlFor="cpfConjuge">CPF do Cônjuge</label>
-          <input
-            type="text"
-            className={`br-input ${cpfConjugeError ? "danger" : ""}`}
-            id="cpfConjuge"
-            value={cpfConjuge}
-            onChange={(e) => setCpfConjuge(e.target.value)}
-          />
-          {cpfConjugeError && <p className="text-danger">{cpfConjugeError}</p>}
-        </div>
-        <div className="row">
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="cpfPai">CPF do Pai</label>
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Cpf Conjuge:
+            </label>
+          </div>
+          <div className="br-input input-inline">
             <input
               type="text"
-              className={`br-input ${cpfPaiError ? "danger" : ""}`}
+              id="cpfConjuge"
+              value={cpfConjuge}
+              placeholder="Digite o cpf do conjuge"
+              onChange={(e) => {
+                const value = e.target.value;
+                setCpfConjuge(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                  setCpfConjugeError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfConjugeError("");
+                }
+              }}
+            />
+            {cpfConjugeError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfConjugeError}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="cpfPai">
+              Cpf Pai:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="text"
               id="cpfPai"
               value={cpfPai}
-              onChange={(e) => setCpfPai(e.target.value)}
+              placeholder="Digite o cpf do pai"
+              onChange={(e) => {
+                const value = e.target.value;
+                setCpfPai(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                  setCpfPaiError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfPaiError("");
+                }
+              }}
             />
-            {cpfPaiError && <p className="text-danger">{cpfPaiError}</p>}
-          </div>
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="cpfMae">CPF da Mãe</label>
-            <input
-              type="text"
-              className={`br-input ${cpfMaeError ? "danger" : ""}`}
-              id="cpfMae"
-              value={cpfMae}
-              onChange={(e) => setCpfMae(e.target.value)}
-            />
-            {cpfMaeError && <p className="text-danger">{cpfMaeError}</p>}
+            {cpfPaiError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfPaiError}
+                </span>
+              </div>
+            )}
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="multiParentalidade">Multiparentalidade</label>
-            <div className="br-switch">
-              <input
-                type="checkbox"
-                id="multiParentalidade"
-                className="br-switch-input"
-                checked={multiParentalidade}
-                onChange={(e) => setMultiparentalidade(e.target.checked)}
-              />
-              <label
-                htmlFor="multiParentalidade"
-                className="br-switch-label"
-              ></label>
-            </div>
+
+        <div className="col-sm-20 col-lg-30 mb-2">
+          <div className="input-label">
+            <label className="text-nowrap" htmlFor="lateral">
+              Cpf Mae:
+            </label>
+          </div>
+          <div className="br-input input-inline">
+            <input
+              type="text"
+              id="cpfMae"
+              value={cpfMae}
+              placeholder="Digite o cpf da mae"
+              onChange={(e) => {
+                const value = e.target.value;
+                setCpfMae(value);
+                if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                  setCpfMaeError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfMaeError("");
+                }
+              }}
+            />
+            {cpfMaeError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfMaeError}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="d-inline-block mr-5">
+          <div className="br-checkbox">
+            <input
+              id="h-checkbox-1"
+              name="h-checkbox-1"
+              type="checkbox"
+              checked={multiParentalidade}
+              onChange={(e) => setMultiparentalidade(e.target.checked)}
+            />
+            <label htmlFor="h-checkbox-1">Multiparentalidade</label>
           </div>
         </div>
         {multiParentalidade && (
-          <>
-            <div className="row">
-              <div className="col-sm-10 col-lg-15 mb-2">
-                <label htmlFor="cpfPai2">CPF do Segundo Pai</label>
+          <div>
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Pai 2:
+                </label>
+              </div>
+              <div className="br-input input-inline">
                 <input
                   type="text"
-                  className={`br-input ${cpfPai2Error ? "danger" : ""}`}
                   id="cpfPai2"
                   value={cpfPai2}
-                  onChange={(e) => setCpfPai2(e.target.value)}
+                  placeholder="Digite o cpf do pai"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCpfPai2(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                      setCpfPai2Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfPai2Error("");
+                    }
+                  }}
                 />
-                {cpfPai2Error && <p className="text-danger">{cpfPai2Error}</p>}
+                {cpfPai2Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfPai2Error}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="col-sm-10 col-lg-15 mb-2">
-                <label htmlFor="cpfMae2">CPF da Segunda Mãe</label>
+            </div>
+
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Mae2:
+                </label>
+              </div>
+              <div className="br-input input-inline">
                 <input
                   type="text"
-                  className={`br-input ${cpfMae2Error ? "danger" : ""}`}
                   id="cpfMae2"
                   value={cpfMae2}
-                  onChange={(e) => setCpfMae2(e.target.value)}
+                  placeholder="Digite o cpf da mae2"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCpfMae2(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                      setCpfMae2Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfMae2Error("");
+                    }
+                  }}
                 />
-                {cpfMae2Error && <p className="text-danger">{cpfMae2Error}</p>}
+                {cpfMae2Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfMae2Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="row">
-              <div className="col-sm-10 col-lg-15 mb-2">
-                <label htmlFor="cpfPai3">CPF do Terceiro Pai</label>
+
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Pai3:
+                </label>
+              </div>
+              <div className="br-input input-inline">
                 <input
                   type="text"
-                  className={`br-input ${cpfPai3Error ? "danger" : ""}`}
                   id="cpfPai3"
                   value={cpfPai3}
-                  onChange={(e) => setCpfPai3(e.target.value)}
+                  placeholder="Digite o cpf do pai3"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCpfPai3(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                      setCpfPai3Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfPai3Error("");
+                    }
+                  }}
                 />
-                {cpfPai3Error && <p className="text-danger">{cpfPai3Error}</p>}
-              </div>
-              <div className="col-sm-10 col-lg-15 mb-2">
-                <label htmlFor="cpfMae3">CPF da Terceira Mãe</label>
-                <input
-                  type="text"
-                  className={`br-input ${cpfMae3Error ? "danger" : ""}`}
-                  id="cpfMae3"
-                  value={cpfMae3}
-                  onChange={(e) => setCpfMae3(e.target.value)}
-                />
-                {cpfMae3Error && <p className="text-danger">{cpfMae3Error}</p>}
+                {cpfPai3Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfPai3Error}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-          </>
+
+            <div className="col-sm-20 col-lg-30 mb-2">
+              <div className="input-label">
+                <label className="text-nowrap" htmlFor="lateral">
+                  Cpf Mae3:
+                </label>
+              </div>
+              <div className="br-input input-inline">
+                <input
+                  type="text"
+                  id="cpfMae3"
+                  value={cpfMae3}
+                  placeholder="Digite o cpf da mae3"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCpfMae3(value);
+                    if (value.trim() !== "" && !/^\d{11}$/.test(value)) {
+                      setCpfMae3Error(
+                        "CPF inválido. Deve conter apenas números e 11 dígitos."
+                      );
+                    } else {
+                      setCpfMae3Error("");
+                    }
+                  }}
+                />
+                {cpfMae3Error && (
+                  <div className="mb-3">
+                    <span className="feedback danger" role="alert">
+                      <i className="fas fa-times-circle" aria-hidden="true"></i>
+                      {cpfMae3Error}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
-        <button className="br-button primary" type="submit">
-          Enviar
-        </button>
+
+        <button type="submit">Enviar</button>
       </form>
     </div>
   );
