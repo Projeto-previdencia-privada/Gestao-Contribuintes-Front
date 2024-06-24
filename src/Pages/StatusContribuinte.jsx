@@ -39,7 +39,7 @@ const StatusContribuinte = () => {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
       const data = await response.json();
-      setContribuinteEncontrado(data.info);
+      setContribuinteEncontrado(data);
       setSearchCPF("");
     } catch (error) {
       console.error("Erro ao buscar dados da API", error);
@@ -56,14 +56,12 @@ const StatusContribuinte = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ cpf, status }), // Envia o status atualizado
+          body: JSON.stringify({ status }), // Envia o status atualizado
         }
       );
       if (!response.ok) {
         throw new Error("Erro ao atualizar contribuinte: " + response.statusText);
       }
-      const data = await response.json();
-      setContribuinteEncontrado((prev) => prev && { ...prev, ativo: status });
       fetchContribuinteDetalhado(cpf); // Fetch updated details
       fetchContribuintes(); // Update list of contribuintes
     } catch (error) {
@@ -79,7 +77,7 @@ const StatusContribuinte = () => {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
       const data = await response.json();
-      setContribuinteEncontrado(data.info);
+      setContribuinteEncontrado(data);
     } catch (error) {
       console.error("Erro ao buscar dados da API", error);
       setError(error.message);
@@ -111,9 +109,9 @@ const StatusContribuinte = () => {
       <ul>
         {contribuinteEncontrado ? (
           <li>
-            {contribuinteEncontrado.nome} ({contribuinteEncontrado.cpf}) -{" "}
+            {contribuinteEncontrado.nome_civil} ({contribuinteEncontrado.cpf}) -{" "}
             <div className="d-flex align-items-center mt-1">
-              {contribuinteEncontrado.ativo ? (
+              {contribuinteEncontrado.status ? (
                 <>
                   <span
                     className="br-tag status bg-success large"
