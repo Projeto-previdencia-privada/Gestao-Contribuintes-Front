@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import styles from "../Form/Form.module.css";
 
@@ -9,7 +9,8 @@ function Form() {
   const [endereco, setEndereco] = useState("");
   const [email, setEmail] = useState("");
   const [salario, setSalario] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [selectedCategoria, setSelectedCategoria] = useState("");
   const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
   const [inicioContribuicao, setInicioContribuicao] = useState("");
@@ -34,24 +35,31 @@ function Form() {
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
+   useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const response = await fetch('http://192.168.37.18:8080/aliquotas');
+        const data = await response.json();
+        const categoriasUnicas = [...new Set(data.map(aliquota => aliquota.categoria))];
+        setCategorias(categoriasUnicas);
+      } catch (error) {
+        console.error("Erro ao buscar categorias:", error);
+      }
+    };
+  
+    fetchCategorias();
+  }, []);
+
   const handleCloseMessage = () => {
     setSuccessMessage("");
   };
-
-  const categorias = [
-    { id: "Categoria 1", label: "Contribuinte Individual" },
-    { id: "Categoria 2", label: "MEI" },
-    { id: "Categoria 3", label: "Empregado" },
-    { id: "Categoria 4", label: "Trabalhador Avulso" },
-    { id: "Categoria 5", label: "Empregado Domestico" },
-  ];
 
   const toggleListVisibility = () => {
     setIsListVisible(!isListVisible);
   };
 
-  const handleCategorySelect = (id, label) => {
-    setCategoria(label);
+  const handleCategorySelect = (categoria) => {
+    setSelectedCategoria(categoria);
     setIsListVisible(false);
   };
 
@@ -136,7 +144,7 @@ function Form() {
       endereco,
       email,
       salario: parseFloat(salario).toFixed(2),
-      categoria,
+      categoria: selectedCategoria,
       telefone,
       inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
@@ -177,7 +185,7 @@ function Form() {
       setEndereco("");
       setEmail("");
       setSalario("");
-      setCategoria("");
+      setSelectedCategoria("");
       setTelefone("");
       setInicioContribuicao("");
       setCpfConjuge("");
@@ -368,47 +376,45 @@ function Form() {
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-          <div className="input-label">
-            <label className="text-nowrap" htmlFor="categoria">
-              Categoria:
-            </label>
+        <label className="text-nowrap" htmlFor="categoria">
+          Categoria:
+        </label>
+        <div className={styles.brselect}>
+          <div className="br-input">
+            <input
+              id="categoria"
+              type="text"
+              className="br-input"
+              placeholder="Selecione a categoria"
+              value={selectedCategoria}
+              readOnly
+              onClick={toggleListVisibility}
+              onChange={(event) => setSelectedCategoria(event.target.value)}
+            />
+            <button
+              className="br-button"
+              type="button"
+              aria-label="Exibir lista"
+              onClick={toggleListVisibility}
+            >
+              <i className="fas fa-angle-down" aria-hidden="true"></i>
+            </button>
           </div>
-          <div className={styles.brselect}>
-            <div className="br-input">
-              <input
-                id="categoria"
-                type="text"
-                placeholder="Selecione a categoria"
-                value={categoria}
-                readOnly
-                onClick={toggleListVisibility}
-              />
-              <button
-                className="br-button"
-                type="button"
-                aria-label="Exibir lista"
-                onClick={toggleListVisibility}
-              >
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </button>
-            </div>
-            {isListVisible && (
-              <div className={`${styles.brlist} ${styles.active}`}>
-                {categorias.map((cat, index) => (
-                  <React.Fragment key={cat.id}>
-                    <div
-                      className={styles.britem}
-                      onClick={() => handleCategorySelect(cat.id, cat.label)}
-                    >
-                      {cat.label}
-                    </div>
-                    {index < categorias.length - 1 && <hr />}
-                  </React.Fragment>
-                ))}
-              </div>
-            )}
-          </div>
+          {isListVisible && (
+            <ul className={`${styles.brlist} ${styles.active}`}>
+              {categorias.map((cat, index) => (
+                <li
+                  key={index}
+                  className={styles.britem}
+                  onClick={() => handleCategorySelect(cat)}
+                >
+                  {cat}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
+      </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
