@@ -329,9 +329,9 @@ function Form() {
               </button>
               {isListVisible && (
                 <ul className="br-list">
-                  {categorias.map((cat) => (
-                    <li key={cat.id} onClick={() => handleCategorySelect(cat.id, cat.label)}>
-                      {cat.label}
+                  {categorias.map((aliquota) => (
+                    <li key={aliquota.id} onClick={() => handleCategorySelect(aliquota.id, aliquota.categoria)}>
+                      {aliquota.categoria}
                     </li>
                   ))}
                 </ul>
