@@ -9,7 +9,6 @@ function Form() {
   const [endereco, setEndereco] = useState("");
   const [email, setEmail] = useState("");
   const [salario, setSalario] = useState("");
-  const [categoria, setCategoria] = useState("");
   const [categorias, setCategorias] = useState([]);
   const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
@@ -38,16 +37,18 @@ function Form() {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch("http://192.168.37.8:3000/aliquotas");
-        const categoriasUnicas = [...new Set(response.data.map(aliquota => aliquota.categoria))];
+        const response = await fetch('http://192.168.37.8:3000/aliquotas');
+        const data = await response.json();
+        const categoriasUnicas = [...new Set(data.map(aliquota => aliquota.categoria))];
         setCategorias(categoriasUnicas);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
-
+  
     fetchCategorias();
   }, []);
+  
 
   const handleCloseMessage = () => {
     setSuccessMessage("");
@@ -57,8 +58,8 @@ function Form() {
     setIsListVisible(!isListVisible);
   };
 
-  const handleCategorySelect = (id, label) => {
-    setCategoria(label);
+  const handleCategorySelect = (categoria) => {
+    setCategorias([categoria]);
     setIsListVisible(false);
   };
 
@@ -143,7 +144,7 @@ function Form() {
       endereco,
       email,
       salario: parseFloat(salario).toFixed(2),
-      categoria,
+      categorias,
       telefone,
       inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
@@ -184,7 +185,7 @@ function Form() {
       setEndereco("");
       setEmail("");
       setSalario("");
-      setCategoria("");
+      setCategorias([]);
       setTelefone("");
       setInicioContribuicao("");
       setCpfConjuge("");
@@ -317,7 +318,6 @@ function Form() {
               onChange={(e) => setSalario(e.target.value)}
             />
           </div>
-
           <div className="col-sm-10 col-lg-15 mb-2">
             <label htmlFor="categoria">Categoria</label>
             <div className="br-input">
@@ -326,11 +326,11 @@ function Form() {
                 type="button"
                 onClick={toggleListVisibility}
               >
-                {categoria || "Selecione uma categoria"}
+                {categorias || "Selecione uma categoria"}
               </button>
               {isListVisible && (
                 <ul className="br-list">
-                  {categoriasUnicas.map((aliquota) => (
+                  {categorias.map((aliquota) => (
                     <li key={aliquota.id} onClick={() => handleCategorySelect(aliquota.id, aliquota.categoria)}>
                       {aliquota.categoria}
                     </li>
@@ -339,7 +339,6 @@ function Form() {
               )}
             </div>
           </div>
-
         </div>
         <div className="row">
           <div className="col-sm-10 col-lg-15 mb-2">
