@@ -22,6 +22,7 @@ function InfoPrev() {
         }
       }
       const data = await response.json();
+      console.log("Dados recebidos da API:", data); // Log da resposta da API
       setContribuinte(data.info);
     } catch (error) {
       if (error.message === "400") {
