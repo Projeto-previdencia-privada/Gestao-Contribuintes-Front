@@ -37,7 +37,7 @@ function Form() {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch('http://192.168.37.8:3000/aliquotas');
+        const response = await fetch('http://192.168.37.18:8080/aliquotas');
         const data = await response.json();
         const categoriasUnicas = [...new Set(data.map(aliquota => aliquota.categoria))];
         setCategorias(categoriasUnicas);
