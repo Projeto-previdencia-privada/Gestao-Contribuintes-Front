@@ -154,7 +154,7 @@ const MenuButton = ({ isOpenProp }) => {
                       <span className="icon">
                         <i className="fas fa-heart" aria-hidden="true"></i>
                       </span>
-                      <span className="content">Cadastro</span>
+                      <span className="content">Cadastrar</span>
                     </a>
                   </li>
                 </ul>
@@ -181,7 +181,7 @@ const MenuButton = ({ isOpenProp }) => {
                       <span className="icon">
                         <i className="fas fa-heart" aria-hidden="true"></i>
                       </span>
-                      <span className="content">Familiares</span>
+                      <span className="content">Consultar Familiares</span>
                     </a>
                   </li>
                 </ul>
