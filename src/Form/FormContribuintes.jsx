@@ -10,6 +10,7 @@ function Form() {
   const [email, setEmail] = useState("");
   const [salario, setSalario] = useState("");
   const [categorias, setCategorias] = useState([]);
+  const [selectedCategoria, setSelectedCategoria] = useState("");
   const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
   const [inicioContribuicao, setInicioContribuicao] = useState("");
@@ -59,7 +60,7 @@ function Form() {
   };
 
   const handleCategorySelect = (categoria) => {
-    setCategorias([categoria]);
+    setSelectedCategoria(categoria);
     setIsListVisible(false);
   };
 
@@ -144,7 +145,7 @@ function Form() {
       endereco,
       email,
       salario: parseFloat(salario).toFixed(2),
-      categorias,
+      categoria: selectedCategoria,
       telefone,
       inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
@@ -185,7 +186,7 @@ function Form() {
       setEndereco("");
       setEmail("");
       setSalario("");
-      setCategorias([]);
+      setSelectedCategoria("");
       setTelefone("");
       setInicioContribuicao("");
       setCpfConjuge("");
@@ -318,27 +319,27 @@ function Form() {
               onChange={(e) => setSalario(e.target.value)}
             />
           </div>
-          <div className="col-sm-10 col-lg-15 mb-2">
-            <label htmlFor="categoria">Categoria</label>
-            <div className="br-input">
-              <button
-                className="br-button"
-                type="button"
-                onClick={toggleListVisibility}
-              >
-                {categorias || "Selecione uma categoria"}
-              </button>
-              {isListVisible && (
-                <ul className="br-list">
-                  {categorias.map((aliquota) => (
-                    <li key={aliquota.id} onClick={() => handleCategorySelect(aliquota.id, aliquota.categoria)}>
-                      {aliquota.categoria}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
+          <div className="col-sm-20 col-lg-30 mb-2">
+          <label htmlFor="categoria">Categorias</label>
+          <input
+            type="text"
+            className="br-input"
+            id="categoria"
+            name="categoria"
+            value={selectedCategoria}
+            onClick={toggleListVisibility}
+            onChange={(event) => setSelectedCategoria(event.target.value)}
+          />
+          {isListVisible && (
+            <ul className="br-list">
+              {categorias.map((categoria, index) => (
+                <li key={index} onClick={() => handleCategorySelect(categoria)}>
+                  {categoria}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         </div>
         <div className="row">
           <div className="col-sm-10 col-lg-15 mb-2">
