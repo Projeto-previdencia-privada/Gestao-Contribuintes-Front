@@ -25,8 +25,12 @@ function AtualizaCadastro() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [notFoundMessage, setNotFoundMessage] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [isListVisible, setIsListVisible] = useState(false);
 
   const location = useLocation();
+
+  const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -35,9 +39,21 @@ function AtualizaCadastro() {
       setCpf(cpfParam);
       handleSearch(cpfParam);
     }
+    fetchCategorias();
   }, [location]);
 
-  const backendUrl = import.meta.env.VITE_API_BASE_URL;
+  const fetchCategorias = async () => {
+    try {
+      const response = await fetch("http://192.168.37.18:8080/aliquotas");
+      const data = await response.json();
+      const categoriasUnicas = [
+        ...new Set(data.map((aliquota) => aliquota.categoria)),
+      ];
+      setCategorias(categoriasUnicas);
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+    }
+  };
 
   const handleSearch = async (cpf) => {
     try {
@@ -109,86 +125,105 @@ function AtualizaCadastro() {
 
       if (cpfConjugeAtualizado !== "") {
         if (!/^\d{11}$/.test(cpfConjugeAtualizado)) {
-            setErrorMessage("Campo CPF do cônjuge está inválido! Deve conter apenas números e 11 dígitos.");
-            return;
+          setErrorMessage(
+            "Campo CPF do cônjuge está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
         }
         updatedData.cpfConjuge = cpfConjugeAtualizado;
-    }
-
-    if (cpfPaiAtualizado !== "") {
-      if (!/^\d{11}$/.test(cpfPaiAtualizado)) {
-          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
-          return;
       }
-      updatedData.cpfPai = cpfPaiAtualizado;
-  }
-    if (cpfPai2Atualizado !== "") {
-      if (!/^\d{11}$/.test(cpfPai2Atualizado)) {
-          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
-          return;
-      }
-      updatedData.cpfPai2 = cpfPai2Atualizado;
-  }
-    if (cpfPai3Atualizado !== "") {
-      if (!/^\d{11}$/.test(cpfPai3Atualizado)) {
-          setErrorMessage("Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos.");
-          return;
-      }
-      updatedData.cpfPai3 = cpfPai3Atualizado;
-  }
 
-  if (cpfMaeAtualizado !== "") {
-    if (!/^\d{11}$/.test(cpfMaeAtualizado)) {
-        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
-        return;
-    }
-    updatedData.cpfMae = cpfMaeAtualizado;
-}
-  if (cpfMae2Atualizado !== "") {
-    if (!/^\d{11}$/.test(cpfMae2Atualizado)) {
-        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
-        return;
-    }
-    updatedData.cpfMae2 = cpfMae2Atualizado;
-}
-  if (cpfMae3Atualizado !== "") {
-    if (!/^\d{11}$/.test(cpfMae3Atualizado)) {
-        setErrorMessage("Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos.");
-        return;
-    }
-    updatedData.cpfMae3 = cpfMae3Atualizado;
-}
-
-      const response = await fetch(
-        `${backendUrl}/contribuintes/${cpf}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
+      if (cpfPaiAtualizado !== "") {
+        if (!/^\d{11}$/.test(cpfPaiAtualizado)) {
+          setErrorMessage(
+            "Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
         }
-      );
-      if (response.status === 400) {
-        setErrorMessage(
-          "O campo está com o formato inválido! Por favor, revise a informação."
-        );
-        return;
+        updatedData.cpfPai = cpfPaiAtualizado;
       }
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar dados: " + response.statusText);
+      if (cpfPai2Atualizado !== "") {
+        if (!/^\d{11}$/.test(cpfPai2Atualizado)) {
+          setErrorMessage(
+            "Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
+        }
+        updatedData.cpfPai2 = cpfPai2Atualizado;
       }
-      setSuccessMessage("Os dados foram alterados com sucesso.");
-      handleSearch(cpf);
+      if (cpfPai3Atualizado !== "") {
+        if (!/^\d{11}$/.test(cpfPai3Atualizado)) {
+          setErrorMessage(
+            "Campo CPF do pai está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
+        }
+        updatedData.cpfPai3 = cpfPai3Atualizado;
+      }
+
+      if (cpfMaeAtualizado !== "") {
+        if (!/^\d{11}$/.test(cpfMaeAtualizado)) {
+          setErrorMessage(
+            "Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
+        }
+        updatedData.cpfMae = cpfMaeAtualizado;
+      }
+      if (cpfMae2Atualizado !== "") {
+        if (!/^\d{11}$/.test(cpfMae2Atualizado)) {
+          setErrorMessage(
+            "Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
+        }
+        updatedData.cpfMae2 = cpfMae2Atualizado;
+      }
+      if (cpfMae3Atualizado !== "") {
+        if (!/^\d{11}$/.test(cpfMae3Atualizado)) {
+          setErrorMessage(
+            "Campo CPF da mãe está inválido! Deve conter apenas números e 11 dígitos."
+          );
+          return;
+        }
+        updatedData.cpfMae3 = cpfMae3Atualizado;
+      }
+
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Cadastro atualizado com sucesso.");
+      } else {
+        const data = await response.json();
+        setErrorMessage(data.message || "Erro ao atualizar cadastro.");
+      }
     } catch (error) {
-      console.error("Erro ao atualizar dados:", error);
+      console.error("Erro ao enviar dados para a API:", error);
+      setErrorMessage("Erro ao enviar dados para a API.");
     }
   };
 
-  const handleCloseMessage = () => {
-    setSuccessMessage("");
-    setErrorMessage("");
+  const toggleListVisibility = () => {
+    setIsListVisible(!isListVisible);
+  };
+
+  const handleCategorySelect = (categoria) => {
+    setCategoriaAtualizado(categoria);
+    setIsListVisible(false);
+  };
+
+  const handleCpfChange = (e) => {
+    const inputCpf = e.target.value;
+    setCpf(inputCpf);
     setNotFoundMessage("");
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   return (
@@ -280,7 +315,7 @@ function AtualizaCadastro() {
               id="cpf"
               placeholder="Digite o CPF"
               value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
+              onChange={handleCpfChange}
             />
             <button
               className="br-button"
@@ -397,19 +432,42 @@ function AtualizaCadastro() {
             </div>
 
             <div className="col-sm-20 col-lg-30 mb-2">
-              <div className="input-label">
-                <label className="text-nowrap" htmlFor="lateral">
-                  Categoria:
-                </label>
-              </div>
-              <div className="br-input input-inline">
-                <input
-                  type="text"
-                  id="categoria"
-                  value={categoriaAtualizado}
-                  placeholder="Digite a categoria"
-                  onChange={(e) => setCategoriaAtualizado(e.target.value)}
-                ></input>
+              <label className="text-nowrap" htmlFor="categoria">
+                Categoria:
+              </label>
+              <div className={styles.brselect}>
+                <div className="br-input">
+                  <input
+                    id="categoria"
+                    type="text"
+                    className="br-input"
+                    placeholder="Selecione a categoria"
+                    value={categoriaAtualizado}
+                    onClick={toggleListVisibility}
+                    onChange={(e) => setCategoriaAtualizado(e.target.value)}
+                  />
+                  <button
+                    className="br-button"
+                    type="button"
+                    aria-label="Exibir lista"
+                    onClick={toggleListVisibility}
+                  >
+                    <i className="fas fa-angle-down" aria-hidden="true"></i>
+                  </button>
+                </div>
+                {isListVisible && (
+                  <ul className={`${styles.brlist} ${styles.active}`}>
+                    {categorias.map((cat, index) => (
+                      <li
+                        key={index}
+                        className={styles.britem}
+                        onClick={() => handleCategorySelect(cat)}
+                      >
+                        {cat}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
 

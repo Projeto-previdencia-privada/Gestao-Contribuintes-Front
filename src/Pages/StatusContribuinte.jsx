@@ -34,7 +34,7 @@ const StatusContribuinte = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`${backendUrl}/contribuintes/${searchCPF}`);
+      const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
       if (!response.ok) {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
