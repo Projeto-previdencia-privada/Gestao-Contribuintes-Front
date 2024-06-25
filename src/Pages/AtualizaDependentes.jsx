@@ -14,9 +14,7 @@ function AtualizaDependentes() {
   const handleSearch = async (cpf) => {
     try {
       const response = await fetch(`${backendUrl}/contribuintes/${cpf}/dependentes`);
-      console.log('URL da API:', `${backendUrl}/contribuintes/${cpf}/dependentes`);
-      console.log('Status da resposta:', response.status);
-
+      
       if (response.status === 404) {
         setNotFoundMessage("O contribuinte não está cadastrado.");
         return;

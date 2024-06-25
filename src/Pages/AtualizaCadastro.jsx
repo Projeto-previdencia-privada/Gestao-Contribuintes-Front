@@ -226,6 +226,12 @@ function AtualizaCadastro() {
     setSuccessMessage("");
   };
 
+  const handleCloseMessage = () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+    setNotFoundMessage("");
+  };
+
   return (
     <div className={styles.container}>
       {successMessage && (
