@@ -23,6 +23,7 @@ import Login from "./Pages/Login.jsx";
 import Home from "./Pages/Home";
 import EsqueceSenha from "./Pages/EsqueceSenha.jsx";
 import StatusContribuinte from "./Pages/StatusContribuinte.jsx";
+import AtualizaDependentes from "./Pages/AtualizaDependentes.jsx";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -50,6 +51,7 @@ const AppContent = () => {
         <Route path="/cadastroDependentes" element={<CadastroDependentes />} />
         <Route path="/arvoreGenealogica" element={<ArvoreGenealogica />} />
         <Route path="/statusContribuinte" element={<StatusContribuinte />} />
+        <Route path="/atualizaDependentes" element={<AtualizaDependentes />} />
       </Routes>
       <Footer />
     </>

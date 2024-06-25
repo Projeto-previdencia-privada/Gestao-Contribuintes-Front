@@ -157,6 +157,18 @@ const MenuButton = ({ isOpenProp }) => {
                       <span className="content">Cadastrar</span>
                     </a>
                   </li>
+                  <li>
+                    <a
+                      className="menu-item"
+                      href="http://192.168.37.8:8090/atualizaDependentes"
+                      role="treeitem"
+                    >
+                      <span className="icon">
+                        <i className="fas fa-heart" aria-hidden="true"></i>
+                      </span>
+                      <span className="content">Excluir Dependentes</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div className="menu-folder">
