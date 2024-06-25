@@ -71,6 +71,8 @@ function AtualizaCadastro() {
       if (!response.ok) {
         throw new Error("Erro ao buscar dados da API: " + response.statusText);
       }
+
+      
       const data = await response.json();
       setContribuinte(data.info);
       setNomeCivilAtualizado(data.info.nomeCivil || "");
@@ -485,7 +487,7 @@ function AtualizaCadastro() {
               </div>
               <div className="br-input input-inline">
                 <input
-                  type="text"
+                  type="date"
                   id="inicioContribuicao"
                   value={inicioContribuicaoAtualizado}
                   placeholder="Digite a data inicial de contribuição"
