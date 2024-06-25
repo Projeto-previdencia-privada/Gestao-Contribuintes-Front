@@ -14,15 +14,13 @@ function AtualizaDependentes() {
   const handleSearch = async (cpf) => {
     try {
       const response = await fetch(`${backendUrl}/contribuintes/${cpf}/dependentes`);
-
+      
       if (response.status === 404) {
         setNotFoundMessage("O contribuinte não está cadastrado.");
-        setDependentes([]); // Limpar a lista de dependentes se o contribuinte não existir
         return;
       }
       if (response.status === 400) {
         setErrorMessage("O CPF não é válido.");
-        setDependentes([]); // Limpar a lista de dependentes em caso de CPF inválido
         return;
       }
       if (!response.ok) {
@@ -39,7 +37,7 @@ function AtualizaDependentes() {
 
   const handleDelete = async (cpfDependente) => {
     try {
-      const response = await fetch(`${backendUrl}/dependentes/${cpf}/${cpfDependente}`, {
+      const response = await fetch(`${backendUrl}/contribuintes/dependentes/${cpf}/${cpfDependente}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -123,11 +121,11 @@ function AtualizaDependentes() {
       )}
 
       <div className={styles.form}>
-        <h1 className={styles.h1}>Atualizar Dados</h1>
+        <h1 className={styles.h1}>Excluir Dependentes</h1>
 
         <div className="col-sm-5 col-lg-5 mb-3">
           <div className="br-input large input-button">
-            <label htmlFor="input-search-large">CPF:</label>
+            <label htmlFor="input-search-large">CPF do contribuinte:</label>
             <input
               type="text"
               id="cpf"
@@ -141,7 +139,7 @@ function AtualizaDependentes() {
           </div>
         </div>
 
-        {dependentes.length > 0 ? (
+        {dependentes.length > 0 && (
           <>
             <h2>Dependentes vinculados</h2>
             {dependentes.map((dependente, index) => (
@@ -165,8 +163,6 @@ function AtualizaDependentes() {
               </div>
             ))}
           </>
-        ) : (
-          <p>Contribuinte não tem dependentes vinculados.</p>
         )}
       </div>
     </div>
