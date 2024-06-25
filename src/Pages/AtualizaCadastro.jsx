@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "../Form/Form.module.css";
@@ -13,8 +12,6 @@ function AtualizaCadastro() {
   const [salarioAtualizado, setSalarioAtualizado] = useState("");
   const [categoriaAtualizado, setCategoriaAtualizado] = useState("");
   const [telefoneAtualizado, setTelefoneAtualizado] = useState("");
-  const [inicioContribuicaoAtualizado, setInicioContribuicaoAtualizado] =
-    useState("");
   const [cpfConjugeAtualizado, setCpfConjugeAtualizado] = useState("");
   const [cpfPaiAtualizado, setCpfPaiAtualizado] = useState("");
   const [cpfMaeAtualizado, setCpfMaeAtualizado] = useState("");
@@ -82,11 +79,6 @@ function AtualizaCadastro() {
       setSalarioAtualizado(data.info.salario || "");
       setCategoriaAtualizado(data.info.categoria || "");
       setTelefoneAtualizado(data.info.telefone || "");
-      setInicioContribuicaoAtualizado(
-        data.info.inicioContribuicao
-          ? format(new Date(data.info.inicioContribuicao), "dd/MM/yyyy")
-          : ""
-      );
       setCpfConjugeAtualizado(data.info.cpfConjuge || "");
       setCpfPaiAtualizado(data.info.cpfPai || "");
       setCpfMaeAtualizado(data.info.cpfMae || "");
@@ -113,9 +105,6 @@ function AtualizaCadastro() {
       if (categoriaAtualizado !== "")
         updatedData.categoria = categoriaAtualizado;
       if (telefoneAtualizado !== "") updatedData.telefone = telefoneAtualizado;
-      if (inicioContribuicaoAtualizado !== "")
-        updatedData.inicioContribuicao = inicioContribuicaoAtualizado;
-
       if (cpfConjugeAtualizado !== "")
         updatedData.cpfConjuge = cpfConjugeAtualizado;
       if (cpfPaiAtualizado !== "") updatedData.cpfPai = cpfPaiAtualizado;
@@ -476,25 +465,6 @@ function AtualizaCadastro() {
                     ))}
                   </ul>
                 )}
-              </div>
-            </div>
-
-            <div className="col-sm-20 col-lg-30 mb-2">
-              <div className="input-label">
-                <label className="text-nowrap" htmlFor="lateral">
-                  Início de Contribuição:
-                </label>
-              </div>
-              <div className="br-input input-inline">
-                <input
-                  type="date"
-                  id="inicioContribuicao"
-                  value={inicioContribuicaoAtualizado}
-                  placeholder="Digite a data inicial de contribuição"
-                  onChange={(e) =>
-                    setInicioContribuicaoAtualizado(e.target.value)
-                  }
-                ></input>
               </div>
             </div>
 

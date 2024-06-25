@@ -113,9 +113,6 @@ function Cadastro() {
                 Telefone: {contribuinte.telefone || "Não informado"}
               </div>
               <div className="br-item" role="listitem">
-                Início da Contribuição: {contribuinte.inicioContribuicao || "Não informado"}
-              </div>
-              <div className="br-item" role="listitem">
                 CPF Conjuge: {contribuinte.cpfConjuge || "Não informado"}
               </div>
               <div className="br-item" role="listitem">

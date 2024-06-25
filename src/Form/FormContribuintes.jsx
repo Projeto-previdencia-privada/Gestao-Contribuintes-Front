@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
 import styles from "../Form/Form.module.css";
 
 function Form() {
@@ -13,7 +12,6 @@ function Form() {
   const [selectedCategoria, setSelectedCategoria] = useState("");
   const [isListVisible, setIsListVisible] = useState(false);
   const [telefone, setTelefone] = useState("");
-  const [inicioContribuicao, setInicioContribuicao] = useState("");
   const [cpfConjuge, setCpfConjuge] = useState("");
   const [cpfPai, setCpfPai] = useState("");
   const [cpfMae, setCpfMae] = useState("");
@@ -124,19 +122,6 @@ function Form() {
       setCpfConjugeError("");
     }
 
-    let formattedInicioContribuicao = "";
-    if (inicioContribuicao) {
-      try {
-        formattedInicioContribuicao = format(
-          new Date(inicioContribuicao),
-          "dd/MM/yyyy"
-        );
-      } catch (error) {
-        console.error("Erro na formatação da data:", error);
-        return;
-      }
-    }
-
     const data = {
       cpf,
       nomeCivil,
@@ -146,7 +131,6 @@ function Form() {
       salario: parseFloat(salario).toFixed(2),
       categoria: selectedCategoria,
       telefone,
-      inicioContribuicao: formattedInicioContribuicao,
       cpfConjuge,
       cpfPai,
       cpfMae,
@@ -187,7 +171,6 @@ function Form() {
       setSalario("");
       setSelectedCategoria("");
       setTelefone("");
-      setInicioContribuicao("");
       setCpfConjuge("");
       setCpfPai("");
       setCpfMae("");
@@ -429,22 +412,6 @@ function Form() {
               placeholder="Digite o número de telefone"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
-            ></input>
-          </div>
-        </div>
-
-        <div className="col-sm-20 col-lg-30 mb-2">
-          <div className="input-label">
-            <label className="text-nowrap" htmlFor="lateral">
-              Inicio da Contribuição:
-            </label>
-          </div>
-          <div className="br-input input-inline">
-            <input
-              type="date"
-              id="inicioContribuicao"
-              value={inicioContribuicao}
-              onChange={(e) => setInicioContribuicao(e.target.value)}
             ></input>
           </div>
         </div>

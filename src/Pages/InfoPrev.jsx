@@ -91,9 +91,6 @@ function InfoPrev() {
             </div>
             <span className="br-divider"></span>
             <div className="br-item" role="listitem">
-              Início da Contribuição: {contribuinte.inicioContribuicao}
-            </div>
-            <div className="br-item" role="listitem">
               Salário: {contribuinte.salario}
             </div>
             <div className="br-item" role="listitem">
