@@ -419,7 +419,7 @@ function Form() {
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
             <label className="text-nowrap" htmlFor="lateral">
-              Cpf Conjuge:
+              CPF Conjuge:
             </label>
           </div>
           <div className="br-input input-inline">
@@ -454,7 +454,7 @@ function Form() {
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
             <label className="text-nowrap" htmlFor="cpfPai">
-              Cpf Pai:
+              CPF Pai:
             </label>
           </div>
           <div className="br-input input-inline">
@@ -489,7 +489,7 @@ function Form() {
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">
             <label className="text-nowrap" htmlFor="lateral">
-              Cpf Mae:
+              CPF Mae:
             </label>
           </div>
           <div className="br-input input-inline">
@@ -538,7 +538,7 @@ function Form() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Cpf Pai 2:
+                  CPF Pai 2:
                 </label>
               </div>
               <div className="br-input input-inline">
@@ -573,7 +573,7 @@ function Form() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Cpf Mae2:
+                  CPF Mae2:
                 </label>
               </div>
               <div className="br-input input-inline">
@@ -608,7 +608,7 @@ function Form() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Cpf Pai3:
+                  CPF Pai3:
                 </label>
               </div>
               <div className="br-input input-inline">
@@ -643,7 +643,7 @@ function Form() {
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="lateral">
-                  Cpf Mae3:
+                  CPF Mae3:
                 </label>
               </div>
               <div className="br-input input-inline">
