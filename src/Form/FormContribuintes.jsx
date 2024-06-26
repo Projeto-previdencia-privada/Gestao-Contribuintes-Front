@@ -33,18 +33,20 @@ function Form() {
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch('http://192.168.37.18:8080/aliquotas');
+        const response = await fetch("http://192.168.37.18:8080/aliquotas");
         const data = await response.json();
-        const categoriasUnicas = [...new Set(data.map(aliquota => aliquota.categoria))];
+        const categoriasUnicas = [
+          ...new Set(data.map((aliquota) => aliquota.categoria)),
+        ];
         setCategorias(categoriasUnicas);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
-  
+
     fetchCategorias();
   }, []);
 
@@ -359,45 +361,45 @@ function Form() {
         </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
-        <label className="text-nowrap" htmlFor="categoria">
-          Categoria:
-        </label>
-        <div className={styles.brselect}>
-          <div className="br-input">
-            <input
-              id="categoria"
-              type="text"
-              className="br-input"
-              placeholder="Selecione a categoria"
-              value={selectedCategoria}
-              readOnly
-              onClick={toggleListVisibility}
-              onChange={(event) => setSelectedCategoria(event.target.value)}
-            />
-            <button
-              className="br-button"
-              type="button"
-              aria-label="Exibir lista"
-              onClick={toggleListVisibility}
-            >
-              <i className="fas fa-angle-down" aria-hidden="true"></i>
-            </button>
+          <label className="text-nowrap" htmlFor="categoria">
+            Categoria:
+          </label>
+          <div className={styles.brselect}>
+            <div className="br-input">
+              <input
+                id="categoria"
+                type="text"
+                className="br-input"
+                placeholder="Selecione a categoria"
+                value={selectedCategoria}
+                readOnly
+                onClick={toggleListVisibility}
+                onChange={(event) => setSelectedCategoria(event.target.value)}
+              />
+              <button
+                className="br-button"
+                type="button"
+                aria-label="Exibir lista"
+                onClick={toggleListVisibility}
+              >
+                <i className="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            {isListVisible && (
+              <ul className={`${styles.brlist} ${styles.active}`}>
+                {categorias.map((cat, index) => (
+                  <li
+                    key={index}
+                    className={styles.britem}
+                    onClick={() => handleCategorySelect(cat)}
+                  >
+                    {cat}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-          {isListVisible && (
-            <ul className={`${styles.brlist} ${styles.active}`}>
-              {categorias.map((cat, index) => (
-                <li
-                  key={index}
-                  className={styles.britem}
-                  onClick={() => handleCategorySelect(cat)}
-                >
-                  {cat}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
-      </div>
 
         <div className="col-sm-20 col-lg-30 mb-2">
           <div className="input-label">

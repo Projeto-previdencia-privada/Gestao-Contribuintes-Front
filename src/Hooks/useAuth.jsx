@@ -33,7 +33,7 @@ export const useAuth = () => {
         localStorage.setItem("user_token", JSON.stringify({ email, token }));
         setUser({ email, token });
 
-        return null; // Retorno nulo para indicar sucesso
+        return null;
       } else {
         return "Email ou senha incorretos";
       }
