@@ -58,12 +58,6 @@ function Header() {
                 </a>
               </div>
             </div>
-            <span className="br-divider vertical mx-half mx-sm-1"></span>
-            <div className="header-functions dropdown">
-              <div>
-                <ButtonAcess />
-              </div>
-            </div>
           </div>
         </div>
         <div className={styles.header_bottom}>
