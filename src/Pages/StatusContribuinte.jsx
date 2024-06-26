@@ -56,14 +56,14 @@ const StatusContribuinte = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status }), // Envia o status atualizado
+          body: JSON.stringify({ status }),
         }
       );
       if (!response.ok) {
         throw new Error("Erro ao atualizar contribuinte: " + response.statusText);
       }
-      fetchContribuinteDetalhado(cpf); // Fetch updated details
-      fetchContribuintes(); // Update list of contribuintes
+      fetchContribuinteDetalhado(cpf);
+      fetchContribuintes();
     } catch (error) {
       console.error("Erro ao atualizar contribuinte:", error);
       setError(error.message);

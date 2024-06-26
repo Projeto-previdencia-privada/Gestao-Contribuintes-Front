@@ -9,14 +9,12 @@ function InfoPrev() {
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleSearch = async () => {
-    console.log("Backend URL:", backendUrl); // Log da URL da API
-    console.log("Iniciando busca para CPF:", cpf); // Log do início da busca
     try {
       setMensagemErro("");
       const response = await fetch(`${backendUrl}/contribuintes/${cpf}`);
-      console.log("Resposta da API recebida:", response); // Log da resposta da API
+      console.log("Resposta da API recebida:", response);
       if (!response.ok) {
-        console.log("Erro na resposta da API:", response.status); // Log do erro na resposta
+        console.log("Erro na resposta da API:", response.status);
         if (response.status === 400) {
           throw new Error("400");
         } else if (response.status === 404) {
@@ -26,11 +24,8 @@ function InfoPrev() {
         }
       }
       const data = await response.json();
-      console.log("Dados recebidos da API:", data); // Log dos dados recebidos
       setContribuinte(data.info);
-      console.log("Contribuinte definido:", data.info); // Log do dado contribuinte
     } catch (error) {
-      console.log("Erro na busca:", error.message); // Log do erro na busca
       if (error.message === "400") {
         setMensagemErro(
           `<div class="br-message danger">

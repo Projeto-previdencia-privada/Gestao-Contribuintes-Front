@@ -23,7 +23,6 @@ function Cadastro() {
         }
       }
       const data = await response.json();
-      console.log("Dados recebidos da API:", data);
       setContribuinte(data.info);
     } catch (error) {
       if (error.message === "400") {
