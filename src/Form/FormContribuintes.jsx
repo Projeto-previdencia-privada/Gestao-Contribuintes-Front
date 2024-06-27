@@ -298,7 +298,7 @@ function Form() {
               Nome Social (opcional):
             </label>
           </div>
-          <div className="br-input input-inline">
+          <div className={`br-input input-inline ${styles.brinput}`}>
             <input
               type="text"
               id="nomeSocial"
