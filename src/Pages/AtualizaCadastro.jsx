@@ -57,6 +57,7 @@ function AtualizaCadastro() {
       const response = await fetch(
         `${backendUrl}/contribuintes/cadastroAtualizacao/${cpf}`
       );
+      console.log("Fetching URL:", response);
       if (response.status === 404) {
         setNotFoundMessage("O contribuinte não está cadastrado.");
         return;
