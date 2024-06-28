@@ -6,14 +6,22 @@ function ArvoreGenealogica() {
   const [cpf, setCpf] = useState("");
   const [familiares, setFamiliares] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [mensagemErro, setMensagemErro] = useState("");
+  const [cpfError, setCpfError] = useState("");
+  const [errorMessage, setErrorMessage ] = useState("");
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleSearch = async () => {
+    if (cpf.trim() === "" || !/^\d{11}$/.test(cpf)) {
+      setCpfError("CPF inválido. Deve conter apenas números e 11 dígitos.");
+      return;
+    } else {
+      setCpfError("");
+    }
+
     try {
       setLoading(true);
-      setMensagemErro("");
+      setErrorMessage("");
       const response = await fetch(
         `${backendUrl}/contribuintes/familia/${cpf}`
       );
@@ -26,33 +34,28 @@ function ArvoreGenealogica() {
           throw new Error("Erro ao buscar dados da API");
         }
       }
+
       const data = await response.json();
       setFamiliares(data.familia);
       setLoading(false);
     } catch (error) {
       setLoading(false);
       if (error.message === "400") {
-        setMensagemErro(
-          `<div class="br-message danger">
-            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
-            <div class="content" aria-label="CPF inválido." role="alert">
-              <span class="message-title">O cpf não é válido.</span>
-            </div>
-          </div>`
+        setErrorMessage(
+          `CPF inválido`
         );
       } else if (error.message === "404") {
-        setMensagemErro(
-          `<div class="br-message danger">
-            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
-            <div class="content" aria-label="CPF não encontrado." role="alert">
-              <span class="message-title">O contribuinte não está cadastrado.</span>
-            </div>
-          </div>`
+        setErrorMessage(
+          `CPF não encontrado`
         );
       } else {
-        setMensagemErro("Erro ao buscar dados da API");
+        setErrorMessage("Erro ao buscar dados da API");
       }
     }
+  };
+
+  const handleCloseMessage = () => {
+    setErrorMessage("");
   };
 
   const renderTree = (node) => {
@@ -87,6 +90,36 @@ function ArvoreGenealogica() {
     <div className={styles.container}>
       <div className={styles.form}>
         <h1 className={styles.h1}>Árvore Genealógica</h1>
+
+        {errorMessage && (
+        <div className="br-message danger">
+          <div className="icon">
+            <i
+              className="fas fa-exclamation-triangle fa-lg"
+              aria-hidden="true"
+            ></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Erro. Ocorreu um erro ao tentar realizar o cadastro."
+            role="alert"
+          >
+            <span className="message-title">Erro.</span>
+            <span className="message-body">{errorMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
         <div className="col-sm-5 col-lg-5 mb-3">
           <div className="br-input large input-button">
             <label htmlFor="input-search-large">Buscar</label>
@@ -95,22 +128,40 @@ function ArvoreGenealogica() {
               type="search"
               placeholder="Digite o CPF"
               value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
+              onChange={(e) => {
+                setCpf(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfError("");
+                }
+              }}
             />
             <button
-              className="br-button"
-              type="button"
-              aria-label="Buscar"
-              onClick={handleSearch}
-            >
-              <i className="fas fa-search" aria-hidden="true"></i>
-            </button>
+            className="br-button"
+            type="button"
+            aria-label="Buscar"
+            onClick={handleSearch}
+          >
+            <i className="fas fa-search" aria-hidden="true"></i>
+          </button>
+            {cpfError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfError}
+                </span>
+              </div>
+            )}
           </div>
         </div>
         
-        {mensagemErro && (
-          <div dangerouslySetInnerHTML={{ __html: mensagemErro }} />
-        )}
+        
 
         {familiares && (
           <div className="br-list" role="list">

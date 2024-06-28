@@ -51,6 +51,7 @@ function Form() {
   }, []);
 
   const handleCloseMessage = () => {
+    setErrorMessage("");
     setSuccessMessage("");
   };
 
@@ -156,7 +157,7 @@ function Form() {
 
       if (!response.ok) {
         if (response.status === 400) {
-          setErrorMessage(result.error);
+          setErrorMessage("Erro ao enviar o Formulário" + (result.message || ""));
         } else {
           throw new Error("Erro na requisição: " + response.statusText);
         }
@@ -187,6 +188,8 @@ function Form() {
       setErrorMessage("Ocorreu um erro ao tentar realizar o cadastro.");
     }
   };
+
+  
 
   return (
     <div className={styles.form}>
@@ -233,6 +236,16 @@ function Form() {
           >
             <span className="message-title">Erro.</span>
             <span className="message-body">{errorMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
       )}

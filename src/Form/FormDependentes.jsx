@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../Form/Form.module.css";
 import { useLocation } from "react-router-dom";
 
-
 function FormDependente() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -14,9 +13,10 @@ function FormDependente() {
   const [contribuinte, setContribuinte] = useState(null);
   const [cpfDependente, setCpfDependente] = useState("");
   const [nomeCivil, setNomeCivil] = useState("");
-  const [mensagem, setMensagem] = useState(null);
   const [cpfError, setCpfError] = useState("");
   const [searchError, setSearchError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -34,14 +34,13 @@ function FormDependente() {
 
       if (response.ok) {
         setContribuinte(data);
-        setMensagem("Contribuinte encontrado.");
       } else {
         setContribuinte(null);
-        setMensagem(data.error || "Contribuinte não encontrado.");
+        setErrorMessage(data.error || "Contribuinte não encontrado.");
       }
     } catch (error) {
       console.error("Erro ao buscar contribuinte:", error);
-      setMensagem("Erro ao buscar contribuinte.");
+      setErrorMessage("Erro ao buscar contribuinte.");
     }
   };
 
@@ -73,40 +72,111 @@ function FormDependente() {
       const data = await response.json();
 
       if (response.ok) {
-        setMensagem(
+        setSuccessMessage(
           "Dependente cadastrado com sucesso e vinculado ao contribuinte."
         );
       } else {
-        setMensagem(data.error || "Erro ao cadastrar dependente.");
+        setErrorMessage(data.error || "Erro ao cadastrar dependente.");
       }
     } catch (error) {
       console.error("Erro ao cadastrar dependente:", error);
-      setMensagem("Erro ao cadastrar dependente.");
+      setErrorMessage("Erro ao cadastrar dependente.");
     }
 
     setCpfDependente("");
     setNomeCivil("");
   };
 
+  const handleCloseMessage = () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+  };
+
   useEffect(() => {
-    setMensagem(null);
     setContribuinte(null);
   }, [cpfContribuinte]);
 
   return (
     <div className={styles.form}>
       <h1 className={styles.h1}>Cadastro de Dependentes</h1>
-      {mensagem && <p>{mensagem}</p>}
+
+      {successMessage && (
+        <div className="br-message success">
+          <div className="icon">
+            <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Sucesso. Os dados foram registrados!."
+            role="alert"
+          >
+            <span className="message-title">Sucesso.</span>
+            <span className="message-body">{successMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="br-message danger">
+          <div className="icon">
+            <i
+              className="fas fa-exclamation-triangle fa-lg"
+              aria-hidden="true"
+            ></i>
+          </div>
+          <div
+            className="content"
+            aria-label="Erro. Ocorreu um erro ao tentar realizar o cadastro."
+            role="alert"
+          >
+            <span className="message-title">Erro.</span>
+            <span className="message-body">{errorMessage}</span>
+          </div>
+          <div className="close">
+            <button
+              className="br-button circle small"
+              type="button"
+              aria-label="Fechar a mensagem alerta"
+              onClick={handleCloseMessage}
+            >
+              <i className="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="col-sm-5 col-lg-5 mb-3">
         <div className="br-input large input-button">
           <label htmlFor="input-search-large">CPF do contribuinte:</label>
           <input
-            type="text"
-            id="cpfContribuinte"
-            placeholder="Digite o CPF"
-            value={cpfContribuinte}
-            onChange={(e) => setCpfContribuinte(e.target.value)}
-          />
+              id="cpfContribuinte"
+              type="search"
+              placeholder="Digite o CPF"
+              value={cpfContribuinte}
+              onChange={(e) => {
+                setCpfContribuinte(e.target.value);
+                if (
+                  e.target.value.trim() === "" ||
+                  !/^\d{11}$/.test(e.target.value)
+                ) {
+                  setCpfError(
+                    "CPF inválido. Deve conter apenas números e 11 dígitos."
+                  );
+                } else {
+                  setCpfError("");
+                }
+              }}
+            />
           <button
             className="br-button"
             onClick={() => handleSearchContribuinte(cpfContribuinte)}
@@ -114,8 +184,17 @@ function FormDependente() {
           >
             <i className="fas fa-search" aria-hidden="true"></i>
           </button>
+          {cpfError && (
+              <div className="mb-3">
+                <span className="feedback danger" role="alert">
+                  <i className="fas fa-times-circle" aria-hidden="true"></i>
+                  {cpfError}
+                </span>
+              </div>
+            )}
         </div>
       </div>
+
       {searchError && (
         <div className="mb-3">
           <span className="feedback danger" role="alert">
@@ -159,14 +238,8 @@ function FormDependente() {
                 />
               </div>
             </div>
-            {cpfError && (
-              <div className="mb-3">
-                <span className="feedback danger" role="alert">
-                  <i className="fas fa-times-circle" aria-hidden="true"></i>
-                  {cpfError}
-                </span>
-              </div>
-            )}
+
+            
             <div className="col-sm-20 col-lg-30 mb-2">
               <div className="input-label">
                 <label className="text-nowrap" htmlFor="nomeCivil">
@@ -197,9 +270,6 @@ function FormDependente() {
           </span>
         </div>
       )}
-
-      
-
     </div>
   );
 }

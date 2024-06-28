@@ -226,7 +226,12 @@ function AtualizaCadastro() {
 
   return (
     <div className={styles.container}>
-      {successMessage && (
+      
+
+      <div className={styles.form}>
+        <h1 className={styles.h1}>Atualizar Dados</h1>
+
+        {successMessage && (
         <div className="br-message success">
           <div className="icon">
             <i className="fas fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -301,9 +306,6 @@ function AtualizaCadastro() {
           </div>
         </div>
       )}
-
-      <div className={styles.form}>
-        <h1 className={styles.h1}>Atualizar Dados</h1>
 
         <div className="col-sm-5 col-lg-5 mb-3">
           <div className="br-input large input-button">
