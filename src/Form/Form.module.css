@@ -1,3 +1,17 @@
+/* Estilos globais */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Estilos dos formulários */
 .form {
   max-width: 1000px;
   margin: 30px auto;
@@ -18,7 +32,7 @@
   color: #0c326f;
 }
 
-.form_login{
+.form_login {
   max-width: 600px;
   margin: 230px auto;
   padding: 5em;
@@ -32,7 +46,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 }
 
 input[type="email"],
@@ -76,7 +89,7 @@ button {
   text-align: center;
 }
 
-.input{
+.input {
   align-items: center;
   justify-content: center;
 }
@@ -132,11 +145,11 @@ input.error {
 }
 
 .britem {
-    padding: 10px;
-    cursor: pointer;
-    width: 495px;
-    height: 40px;
-    margin-bottom: 18px;
+  padding: 10px;
+  cursor: pointer;
+  width: 495px;
+  height: 40px;
+  margin-bottom: 18px;
 }
 
 .britem:hover {
@@ -145,4 +158,25 @@ input.error {
 
 .brinput {
   width: 580px;
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 758px) {
+  .form, .form_login {
+    padding: 2em;
+    margin: 20px auto;
+  }
+
+  .brlist, .brinput, .britem {
+    width: 100%;
+  }
+
+  .recall_forget {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button_dep {
+    width: 100%;
+  }
 }
